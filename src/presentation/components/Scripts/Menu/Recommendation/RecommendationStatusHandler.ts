@@ -1,9 +1,9 @@
-import { IScript } from '@/domain/IScript';
-import { RecommendationLevel } from '@/domain/RecommendationLevel';
+import type { Script } from '@/domain/Executables/Script/Script';
+import { RecommendationLevel } from '@/domain/Executables/Script/RecommendationLevel';
 import { scrambledEqual } from '@/application/Common/Array';
-import { ICategoryCollection } from '@/domain/ICategoryCollection';
-import { ReadonlyScriptSelection, ScriptSelection } from '@/application/Context/State/Selection/Script/ScriptSelection';
-import { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
+import type { ICategoryCollection } from '@/domain/ICategoryCollection';
+import type { ReadonlyScriptSelection, ScriptSelection } from '@/application/Context/State/Selection/Script/ScriptSelection';
+import type { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
 import { RecommendationStatusType } from './RecommendationStatusType';
 
 export function setCurrentRecommendationStatus(
@@ -90,7 +90,7 @@ function selectOnly(
 }
 
 function areAllSelected(
-  expectedScripts: ReadonlyArray<IScript>,
+  expectedScripts: ReadonlyArray<Script>,
   selection: ReadonlyArray<SelectedScript>,
 ): boolean {
   const selectedScriptIds = selection

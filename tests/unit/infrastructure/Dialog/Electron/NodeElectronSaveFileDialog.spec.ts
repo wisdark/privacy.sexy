@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { FileType, SaveFileErrorType } from '@/presentation/common/Dialog';
-import { ElectronFileDialogOperations, NodeElectronSaveFileDialog, NodeFileOperations } from '@/infrastructure/Dialog/Electron/NodeElectronSaveFileDialog';
-import { Logger } from '@/application/Common/Log/Logger';
+import { FileType, type SaveFileErrorType } from '@/presentation/common/Dialog';
+import {
+  type ElectronFileDialogOperations, NodeElectronSaveFileDialog, type NodePathOperations,
+} from '@/infrastructure/Dialog/Electron/NodeElectronSaveFileDialog';
+import type { Logger } from '@/application/Common/Log/Logger';
 import { LoggerStub } from '@tests/unit/shared/Stubs/LoggerStub';
 import { expectExists } from '@tests/shared/Assertions/ExpectExists';
 import { ReadbackFileWriterStub } from '@tests/unit/shared/Stubs/ReadbackFileWriterStub';
-import { FileReadbackVerificationErrors, FileWriteOperationErrors, ReadbackFileWriter } from '@/infrastructure/ReadbackFileWriter/ReadbackFileWriter';
+import { FileReadbackVerificationErrors, FileWriteOperationErrors, type ReadbackFileWriter } from '@/infrastructure/ReadbackFileWriter/ReadbackFileWriter';
 import { ElectronFileDialogOperationsStub } from './ElectronFileDialogOperationsStub';
 import { NodePathOperationsStub } from './NodePathOperationsStub';
 
@@ -303,14 +305,12 @@ describe('NodeElectronSaveFileDialog', () => {
       {
         description: 'unexpected dialog return value failure',
         expectedErrorType: 'DialogDisplayError',
-        expectedErrorMessage: 'Unexpected Error: File path is undefined after save dialog completion.',
+        expectedErrorMessage: 'Unexpected Error: File path is empty after save dialog completion.',
         expectLogs: true,
         buildFaultyContext: (setup) => {
-          const electronMock = new ElectronFileDialogOperationsStub().withMimicUserCancel(false);
-          electronMock.showSaveDialog = () => Promise.resolve({
-            canceled: false,
-            filePath: undefined,
-          });
+          const electronMock = new ElectronFileDialogOperationsStub()
+            .withUserSelectedFilePath('')
+            .withMimicUserCancel(false);
           return setup
             .withElectron(electronMock);
         },
@@ -367,7 +367,7 @@ class SaveFileDialogTestSetup {
 
   private electron: ElectronFileDialogOperations = new ElectronFileDialogOperationsStub();
 
-  private node: NodeFileOperations = new NodePathOperationsStub();
+  private node: NodePathOperations = new NodePathOperationsStub();
 
   private fileWriter: ReadbackFileWriter = new ReadbackFileWriterStub();
 
@@ -376,7 +376,7 @@ class SaveFileDialogTestSetup {
     return this;
   }
 
-  public withNode(node: NodeFileOperations): this {
+  public withNode(node: NodePathOperations): this {
     this.node = node;
     return this;
   }

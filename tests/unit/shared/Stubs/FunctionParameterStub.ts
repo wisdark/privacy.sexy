@@ -1,6 +1,6 @@
-import { IFunctionParameter } from '@/application/Parser/Script/Compiler/Function/Parameter/IFunctionParameter';
+import type { FunctionParameter } from '@/application/Parser/Executable/Script/Compiler/Function/Parameter/FunctionParameter';
 
-export class FunctionParameterStub implements IFunctionParameter {
+export class FunctionParameterStub implements FunctionParameter {
   public name = 'function-parameter-stub';
 
   public isOptional = true;
@@ -10,7 +10,7 @@ export class FunctionParameterStub implements IFunctionParameter {
     return this;
   }
 
-  public withOptionality(isOptional: boolean) {
+  public withOptional(isOptional: boolean) {
     this.isOptional = isOptional;
     return this;
   }

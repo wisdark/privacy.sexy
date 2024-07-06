@@ -1,9 +1,9 @@
-import { IEntity } from '@/infrastructure/Entity/IEntity';
-import { IScript } from '@/domain/IScript';
+import type { IEntity } from '@/infrastructure/Entity/IEntity';
+import type { Script } from '@/domain/Executables/Script/Script';
 
-type ScriptId = IScript['id'];
+type ScriptId = Script['id'];
 
 export interface SelectedScript extends IEntity<ScriptId> {
-  readonly script: IScript;
+  readonly script: Script;
   readonly revert: boolean;
 }

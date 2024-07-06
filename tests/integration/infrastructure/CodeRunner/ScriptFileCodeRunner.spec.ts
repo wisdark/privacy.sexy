@@ -3,13 +3,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { exec } from 'node:child_process';
 import { describe, it } from 'vitest';
-import { ScriptDirectoryProvider } from '@/infrastructure/CodeRunner/Creation/Directory/ScriptDirectoryProvider';
+import type { ScriptDirectoryProvider } from '@/infrastructure/CodeRunner/Creation/Directory/ScriptDirectoryProvider';
 import { ScriptFileCreationOrchestrator } from '@/infrastructure/CodeRunner/Creation/ScriptFileCreationOrchestrator';
 import { ScriptFileCodeRunner } from '@/infrastructure/CodeRunner/ScriptFileCodeRunner';
 import { CurrentEnvironment } from '@/infrastructure/RuntimeEnvironment/RuntimeEnvironmentFactory';
 import { OperatingSystem } from '@/domain/OperatingSystem';
-import { LinuxTerminalEmulator } from '@/infrastructure/CodeRunner/Execution/VisibleTerminalScriptFileExecutor';
 import { formatAssertionMessage } from '@tests/shared/FormatAssertionMessage';
+import { LinuxTerminalEmulator } from '@/infrastructure/CodeRunner/Execution/CommandDefinition/Commands/LinuxVisibleTerminalCommand';
 
 describe('ScriptFileCodeRunner', () => {
   it('executes simple script correctly', async ({ skip }) => {

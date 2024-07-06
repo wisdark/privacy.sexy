@@ -1,30 +1,55 @@
 import type { ScriptingDefinitionData } from '@/application/collections/';
-import { IScriptingDefinition } from '@/domain/IScriptingDefinition';
+import type { IScriptingDefinition } from '@/domain/IScriptingDefinition';
 import { ScriptingDefinition } from '@/domain/ScriptingDefinition';
 import { ScriptingLanguage } from '@/domain/ScriptingLanguage';
 import type { ProjectDetails } from '@/domain/Project/ProjectDetails';
-import { createEnumParser } from '../../Common/Enum';
-import { ICodeSubstituter } from './ICodeSubstituter';
-import { CodeSubstituter } from './CodeSubstituter';
+import { createEnumParser, type EnumParser } from '../../Common/Enum';
+import { createTypeValidator, type TypeValidator } from '../Common/TypeValidator';
+import { type CodeSubstituter, substituteCode } from './CodeSubstituter';
 
-export class ScriptingDefinitionParser {
-  constructor(
-    private readonly languageParser = createEnumParser(ScriptingLanguage),
-    private readonly codeSubstituter: ICodeSubstituter = new CodeSubstituter(),
-  ) {
-  }
+export const parseScriptingDefinition: ScriptingDefinitionParser = (
+  definition,
+  projectDetails,
+  utilities: ScriptingDefinitionParserUtilities = DefaultUtilities,
+) => {
+  validateData(definition, utilities.validator);
+  const language = utilities.languageParser.parseEnum(definition.language, 'language');
+  const startCode = utilities.codeSubstituter(definition.startCode, projectDetails);
+  const endCode = utilities.codeSubstituter(definition.endCode, projectDetails);
+  return new ScriptingDefinition(
+    language,
+    startCode,
+    endCode,
+  );
+};
 
-  public parse(
+export interface ScriptingDefinitionParser {
+  (
     definition: ScriptingDefinitionData,
     projectDetails: ProjectDetails,
-  ): IScriptingDefinition {
-    const language = this.languageParser.parseEnum(definition.language, 'language');
-    const startCode = this.codeSubstituter.substitute(definition.startCode, projectDetails);
-    const endCode = this.codeSubstituter.substitute(definition.endCode, projectDetails);
-    return new ScriptingDefinition(
-      language,
-      startCode,
-      endCode,
-    );
-  }
+    utilities?: ScriptingDefinitionParserUtilities,
+  ): IScriptingDefinition;
 }
+
+function validateData(
+  data: ScriptingDefinitionData,
+  validator: TypeValidator,
+): void {
+  validator.assertObject({
+    value: data,
+    valueName: 'scripting definition',
+    allowedProperties: ['language', 'fileExtension', 'startCode', 'endCode'],
+  });
+}
+
+interface ScriptingDefinitionParserUtilities {
+  readonly languageParser: EnumParser<ScriptingLanguage>;
+  readonly codeSubstituter: CodeSubstituter;
+  readonly validator: TypeValidator;
+}
+
+const DefaultUtilities: ScriptingDefinitionParserUtilities = {
+  languageParser: createEnumParser(ScriptingLanguage),
+  codeSubstituter: substituteCode,
+  validator: createTypeValidator(),
+};

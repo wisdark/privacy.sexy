@@ -1,11 +1,12 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
-import { Ref, nextTick, ref } from 'vue';
+import { type Ref, nextTick, ref } from 'vue';
 import CardList from '@/presentation/components/Scripts/View/Cards/CardList.vue';
 import { useCollectionState } from '@/presentation/components/Shared/Hooks/UseCollectionState';
 import { UseCollectionStateStub } from '@tests/unit/shared/Stubs/UseCollectionStateStub';
 import { InjectionKeys } from '@/presentation/injectionSymbols';
 import { createSizeObserverStub } from '@tests/unit/shared/Stubs/SizeObserverStub';
+import { UseEventListenerStub } from '@tests/unit/shared/Stubs/UseEventListenerStub';
 
 const DOM_SELECTOR_CARDS = '.cards';
 
@@ -54,6 +55,7 @@ function mountComponent(options?: {
       provide: {
         [InjectionKeys.useCollectionState.key]:
           () => options?.useCollectionState ?? new UseCollectionStateStub().get(),
+        [InjectionKeys.useAutoUnsubscribedEventListener.key]: new UseEventListenerStub().get(),
       },
       stubs: {
         [sizeObserverName]: sizeObserverStub,

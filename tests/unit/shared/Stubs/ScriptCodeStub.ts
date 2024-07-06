@@ -1,9 +1,9 @@
-import { IScriptCode } from '@/domain/IScriptCode';
+import type { ScriptCode } from '@/domain/Executables/Script/Code/ScriptCode';
 
-export class ScriptCodeStub implements IScriptCode {
-  public execute = 'default execute code';
+export class ScriptCodeStub implements ScriptCode {
+  public execute = `[${ScriptCodeStub.name}] default execute code`;
 
-  public revert = 'default revert code';
+  public revert = `[${ScriptCodeStub.name}] default revert code`;
 
   public withExecute(code: string) {
     this.execute = code;

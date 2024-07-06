@@ -1,9 +1,9 @@
-import { ICategory } from '@/domain/ICategory';
-import { ICategoryCollection } from '@/domain/ICategoryCollection';
-import { ScriptSelection } from '../Script/ScriptSelection';
-import { ScriptSelectionChange } from '../Script/ScriptSelectionChange';
-import { CategorySelection } from './CategorySelection';
-import { CategorySelectionChange, CategorySelectionChangeCommand } from './CategorySelectionChange';
+import type { Category } from '@/domain/Executables/Category/Category';
+import type { ICategoryCollection } from '@/domain/ICategoryCollection';
+import type { CategorySelectionChange, CategorySelectionChangeCommand } from './CategorySelectionChange';
+import type { CategorySelection } from './CategorySelection';
+import type { ScriptSelection } from '../Script/ScriptSelection';
+import type { ScriptSelectionChange } from '../Script/ScriptSelectionChange';
 
 export class ScriptToCategorySelectionMapper implements CategorySelection {
   constructor(
@@ -13,7 +13,7 @@ export class ScriptToCategorySelectionMapper implements CategorySelection {
 
   }
 
-  public areAllScriptsSelected(category: ICategory): boolean {
+  public areAllScriptsSelected(category: Category): boolean {
     const { selectedScripts } = this.scriptSelection;
     if (selectedScripts.length === 0) {
       return false;
@@ -27,7 +27,7 @@ export class ScriptToCategorySelectionMapper implements CategorySelection {
     );
   }
 
-  public isAnyScriptSelected(category: ICategory): boolean {
+  public isAnyScriptSelected(category: Category): boolean {
     const { selectedScripts } = this.scriptSelection;
     if (selectedScripts.length === 0) {
       return false;

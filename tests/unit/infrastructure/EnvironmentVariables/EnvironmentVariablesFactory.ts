@@ -1,15 +1,15 @@
 import {
   describe,
 } from 'vitest';
-import { itIsSingleton } from '@tests/unit/shared/TestCases/SingletonTests';
-import { EnvironmentVariablesFactory, EnvironmentVariablesValidator } from '@/infrastructure/EnvironmentVariables/EnvironmentVariablesFactory';
+import { itIsSingletonFactory } from '@tests/unit/shared/TestCases/SingletonFactoryTests';
+import { EnvironmentVariablesFactory, type EnvironmentVariablesValidator } from '@/infrastructure/EnvironmentVariables/EnvironmentVariablesFactory';
 import { ViteEnvironmentVariables } from '@/infrastructure/EnvironmentVariables/Vite/ViteEnvironmentVariables';
-import { IEnvironmentVariables } from '@/infrastructure/EnvironmentVariables/IEnvironmentVariables';
+import type { IEnvironmentVariables } from '@/infrastructure/EnvironmentVariables/IEnvironmentVariables';
 import { expectExists } from '@tests/shared/Assertions/ExpectExists';
 
 describe('EnvironmentVariablesFactory', () => {
   describe('instance', () => {
-    itIsSingleton({
+    itIsSingletonFactory({
       getter: () => EnvironmentVariablesFactory.Current.instance,
       expectedType: ViteEnvironmentVariables,
     });

@@ -1,4 +1,8 @@
+# yaml-language-server: $schema=./.schema.yaml
+# ↑ Adds a schema support in VS Code for auto-completion and validation.
+
 # Structure is documented in "docs/collection-files.md"
+
 os: linux
 scripting:
     language: shellscript
@@ -74,7 +78,7 @@ actions:
                 - [tcsh source code](https://web.archive.org/web/20221029212024/https://github.com/tcsh-org/tcsh).
 
                 [1]: https://web.archive.org/web/20221029134950/https://linux.die.net/man/1/tcsh "tcsh(1) - Linux man page | linux.die.net"
-                [2]: https://web.archive.org/web/20221029135041/https://books.google.com/books?id=LyDP5b2xzaMC&pg=PA56 "Sams Teach Yourself FreeBSD in 24 Hours - Michael Urban, Brian Tiemann - Google Books | books.google.com"
+                [2]: https://web.archive.org/web/20221029135007/https://books.google.com/books?id=LyDP5b2xzaMC&pg=PA56#v=onepage&q&f=false "Sams Teach Yourself FreeBSD in 24 Hours - Michael Urban, Brian Tiemann - Google Books | books.google.com"
               call:
                 function: DeleteFileFromUserAndRootHome
                 parameters:
@@ -104,7 +108,7 @@ actions:
               name: Clear KornShell (ksh) history
               recommend: strict
               docs: |-
-                KornShell is a shell that has different versions by different maintainers and developers such as `ksh93+u`, `ksh93v-, and `ksh2020`.
+                KornShell is a shell that has different versions by different maintainers and developers such as `ksh93+u`, `ksh93v-`, and `ksh2020`.
                 The latest maintained version is `ksh93u+m`, see its [GitHub repository (ksh93/ksh)](https://web.archive.org/web/20221029212509/https://github.com/ksh93/ksh).
 
                 Its history file (histfile) is saved at `~/.sh_history` by default [1] [2].
@@ -184,7 +188,7 @@ actions:
               > - Logs are valuable for diagnosing issues and understanding past actions [1].
               > - Script files can help review changes made to the system and aid in reverting those changes if needed.
 
-              [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
+              [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
               [2]: https://github.com/undergroundwires/privacy.sexy/blob/master/SECURITY.md "SECURITY.md  | privacy.sexy | github.com"
             children:
               -
@@ -202,7 +206,7 @@ actions:
                   > - This action is irreversible. Deleted script files cannot be retrieved.
                   > - These files might be necessary for troubleshooting if you experience issues after using privacy.sexy scripts.
 
-                  [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
+                  [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
                   [2]: https://github.com/undergroundwires/privacy.sexy/blob/master/SECURITY.md "SECURITY.md  | privacy.sexy | github.com"
                 call:
                   function: ClearDirectoryContents
@@ -223,7 +227,7 @@ actions:
                   > - Removing logs will prevent you from reviewing the application's activities, which could be helpful in diagnosing issues.
                   > - Logs can contain valuable information for technical support should you need assistance.
 
-                  [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
+                  [1]: https://github.com/undergroundwires/privacy.sexy/blob/master/docs/desktop/desktop-vs-web-features.md "Desktop vs. Web Features | privacy.sexy | github.com"
                   [2]: https://github.com/undergroundwires/privacy.sexy/blob/master/SECURITY.md "SECURITY.md  | privacy.sexy | github.com"
                 call:
                   function: ClearDirectoryContents
@@ -1027,13 +1031,13 @@ actions:
             recommend: strict
             docs: |-
               `recently-used.xbel` is part of the GTK+ toolkit [1] that's developed and used by GNOME [2].
-              <gtk-recent-manager> provides a facility for adding, removing, and looking up recently used files
+              `GtkRecentManager` provides a facility for adding, removing, and looking up recently used files
               and acts like a database of all the recently used files [3].
 
               GTK is used by many GUI software. GNOME uses the GTK+ library [2], while KDE uses the QT library [4].
               `recently-used.xbel` is used by other third-party GTK 3 based applications such as Firefox,
               Visual Studio Code (and all other Electron applications [5]), Thunderbird…
-              See also: ["List of GTK applications | Wikipedia"](https://web.archive.org/web/20221029221112/https://en.wikipedia.org/wiki/List_of_GTK_applications).
+              See also: [List of GTK applications | Wikipedia](https://web.archive.org/web/20221029221112/https://en.wikipedia.org/wiki/List_of_GTK_applications).
 
               [1]: https://web.archive.org/web/20221030164434/https://gitlab.gnome.org/GNOME/gtk/-/raw/1c3f179a20bf7537691216c28332f00c651a577f/gtk/gtkrecentmanager.c#L103 "Line 103 defines GTK_RECENTLY_USED_FILE as recently-used.xbel | GTK source code | gitlab.gnome.org"
               [2]: https://web.archive.org/web/20221029151059/https://gtk.org/ "GTK homepage | gtk.org"
@@ -1733,7 +1737,7 @@ actions:
               See also:
               - [Source code for the Ubuntu Report tool | github.com](https://web.archive.org/web/20221029221854/https://github.com/ubuntu/ubuntu-report/)
               - [Statistics gathered and visualized | ubuntu.com/desktop/statistics](https://web.archive.org/web/20221029221910/https://ubuntu.com/desktop/statistics)
-              - [ubuntu-devel mailing list thread where ubuntu-report was first proposed, | lists.ubuntu.com ](https://web.archive.org/web/20221029221924/https://lists.ubuntu.com/archives/ubuntu-devel/2018-February/040139.html)
+              - [ubuntu-devel mailing list thread where ubuntu-report was first proposed | lists.ubuntu.com](https://web.archive.org/web/20221029162523/https://lists.ubuntu.com/archives/ubuntu-devel/2018-February/040139.html)
 
               [1]: https://web.archive.org/web/20221029162505/https://github.com/ubuntu/ubuntu-report/blob/30e902ebc17e4e10d83392d7cd3dc05fc9e35cc4/README.md "ubuntu-report/README.md at master · ubuntu/ubuntu-report | github.com"
               [2]: https://web.archive.org/web/20221029162538/https://github.com/ubuntu/ubuntu-report/blob/8e6030ff9bbeacacf41a9b58ea638a5c9a6f864d/README.md "More diagnostics data from desktop | lists.ubuntu.com"
@@ -1974,10 +1978,10 @@ actions:
 
           Read more about Zeitgeist:
 
-          - [Official website | zeitgeist.freedesktop.org](https://web.archive.org/web/20221029222739/https://zeitgeist.freedesktop.org/)
+          - [Official website | zeitgeist.freedesktop.org](https://web.archive.org/web/20221029150843/https://zeitgeist.freedesktop.org/)
           - [Wikipedia article | en.wikipedia.org](https://web.archive.org/web/20221029222921/https://en.wikipedia.org/wiki/Zeitgeist_%28free_software%29)
           - [Launchpad project page | launchpad.net](https://web.archive.org/web/20221029223026/https://launchpad.net/zeitgeist/)
-          - [ArchWiki article | wiki.archlinux.org](https://web.archive.org/web/20221029223033/https://wiki.archlinux.org/title/Zeitgeist)
+          - [ArchWiki article | wiki.archlinux.org](https://web.archive.org/web/20221029164539/https://wiki.archlinux.org/title/Zeitgeist)
 
           [1]: https://web.archive.org/web/20221029163704/https://packages.debian.org/en/sid/libdevel/libzeitgeist-2.0-dev "libzeitgeist-2.0-dev | Debian Packages | packages.debian.org"
           [2]: https://web.archive.org/web/20221029163817/https://gitlab.gnome.org/crvi/gnome-activity-journal "crvi / GNOME Activity Journal · GitLab | gitlab.gnome.org"
@@ -2072,8 +2076,8 @@ actions:
               [1]: https://web.archive.org/web/20221029165307/https://packages.fedoraproject.org/pkgs/zeitgeist/zeitgeist/index.html "zeitgeist - Fedora Packages | packages.fedoraproject.org"
               [2]: https://web.archive.org/web/20221029165603/https://archlinux.org/packages/extra/x86_64/zeitgeist/ "Arch Linux - zeitgeist 1.0.4-1 (x86_64) | archlinux.org"
               [3]: https://web.archive.org/web/20221029165609/https://packages.debian.org/search?keywords=zeitgeist-core "Debian -- Package Search Results -- zeitgeist-core | packages.debian.org"
-              [4]: https://web.archive.org/web/20221029165714/https://releases.ubuntu.com/xenial/ubuntu-16.04.6-desktop-i386.manifest "List of sofware packags shipped with Ubuntu 16.04.6 | releases.ubuntu.com"
-              [5]: https://web.archive.org/web/20221029165726/https://releases.ubuntu.com/18.04/ubuntu-18.04.6-desktop-amd64.manifest "List of sofware packags shipped with Ubuntu 18.04.6 | releases.ubuntu.com"
+              [4]: https://web.archive.org/web/20221029165714/https://releases.ubuntu.com/xenial/ubuntu-16.04.6-desktop-i386.manifest "List of software packages shipped with Ubuntu 16.04.6 | releases.ubuntu.com"
+              [5]: https://web.archive.org/web/20221029165726/https://releases.ubuntu.com/18.04/ubuntu-18.04.6-desktop-amd64.manifest "List of software packages shipped with Ubuntu 18.04.6 | releases.ubuntu.com"
               [6]: https://web.archive.org/web/20221029165821/https://bugs.archlinux.org/task/52326 "FS#52326 : [midori-gtk2] Please remove the zeitgeist dependency! | archlinux.org"
               [7]: https://web.archive.org/web/20221029165914/https://forum.artixlinux.org/index.php/topic,1432.0.html "Remove Unmaintained Zeitgeist (Spyware/Telemetry) from Default MATE installation | artixlinux.org"
               [8]: https://web.archive.org/web/20221029165902/https://askubuntu.com/questions/45548/disabling-zeitgeist/57487 "Disabling Zeitgeist - Ask Ubuntu | askubuntu.com"
@@ -2116,7 +2120,7 @@ actions:
           [3]: https://web.archive.org/web/20221029170026/https://packages.ubuntu.com/bionic/all/network-manager-config-connectivity-ubuntu/filelist "Ubuntu - File list of package network-manager-config-connectivity-ubuntu/bionic/all | packages.ubuntu.com"
           [4]: https://web.archive.org/web/20221029170108/https://github.com/pop-os/connectivity/blob/master/debian/20-connectivity-pop.conf "connectivity/20-connectivity-pop.conf at master · pop-os/connectivity | github.com"
           [5]: https://web.archive.org/web/20221029170202/https://cgit.freedesktop.org/NetworkManager/NetworkManager/tree/contrib/fedora/rpm/20-connectivity-fedora.conf "20-connectivity-fedora.conf\rpm\fedora\contrib - NetworkManager/NetworkManager - Network connection manager and user applications | reedesktop.org"
-          [6]: https://web.archive.org/web/20221029170207/https://fedora.pkgs.org/35/fedora-updates-testing-x86_64/NetworkManager-config-connectivity-fedora-1.32.12-1.fc35.noarch.rpm.html "NetworkManager-config-connectivity-fedora | fedora.pkgs.org"
+          [6]: https://archive.ph/2023.12.06-185917/https://pkgs.org/download/NetworkManager-config-connectivity-fedora "Networkmanager-config-connectivity-fedora Download (RPM) | pkgs.org"
         call:
           function: RunIfCommandExists
           parameters:
@@ -2202,7 +2206,7 @@ actions:
             - Diagnostic information about your system and usage is sent to Microsoft servers [3].
             - Your usage data and data about feature performance [3].
 
-            [1]: https://web.archive.org/web/20221029170818/https://en.wikipedia.org/wiki/Visual_Studio_Code "Visual Studio Code - Wikipedia | en.wikipedia.org"
+            [1]: https://web.archive.org/web/20221029142001/https://en.wikipedia.org/wiki/Visual_Studio_Code "Visual Studio Code - Wikipedia | en.wikipedia.org"
             [2]: https://web.archive.org/web/20221029170840/https://code.visualstudio.com/updates/v1_26#_offline-mode "Visual Studio Code July 2018 | code.visualstudio.com"
             [3]: https://web.archive.org/web/20221029171138/https://code.visualstudio.com/docs/getstarted/telemetry "Visual Studio Code Telemetry | code.visualstudio.com"
         children:
@@ -2623,7 +2627,7 @@ actions:
           [3]: https://web.archive.org/web/20221008150941/https://support.mozilla.org/en-US/kb/how-does-phishing-and-malware-protection-work "How does built-in Phishing and Malware Protection work? | Firefox Help | support.mozilla.org"
         children:
           -
-            category: Harden Firefox privacy
+            category: Harden Firefox privacy # Same name as Windows > "Harden Edge privacy"
             docs: |-
               The following are privacy-focused tweaks to prevent browser fingerprinting and tracking.
 
@@ -2697,7 +2701,7 @@ actions:
                       [2]: https://web.archive.org/web/20231003094154/https://bugzilla.mozilla.org/show_bug.cgi?id=1746646 "1746646 - (tcp-mochitests) [meta] Make mochitests work with TCP enabled (cookieBehavior = 5) | bugzilla.mozilla.org"
                       [3]: https://web.archive.org/web/20230918172155/https://developer.mozilla.org/en-US/docs/Web/Privacy/State_Partitioning#disable_dynamic_state_partitioning "State Partitioning - Privacy on the web | MDN"
                       [4]: https://web.archive.org/web/20231003094207/https://bugzilla.mozilla.org/show_bug.cgi?id=1649876#c5 "1649876 - Migrate FPI users to dFPI | bugzilla.mozilla.org"
-                      [5]: https://blog.mozilla.org/en/products/firefox/firefox-rolls-out-total-cookie-protection-by-default-to-all-users-worldwide/ "Firefox Rolls Out Total Cookie Protection By Default"
+                      [5]: https://web.archive.org/web/20231207105610/https://blog.mozilla.org/en/products/firefox/firefox-rolls-out-total-cookie-protection-by-default-to-all-users-worldwide/ "Firefox Rolls Out Total Cookie Protection By Default"
                       [6]: https://web.archive.org/web/20231003094350/https://bugzilla.mozilla.org/show_bug.cgi?id=1631676#c25 "1631676 - Disable dfpi when privacy.firstparty.isolate=true | bugzilla.mozilla.org"
                     call:
                       function: AddFirefoxPrefs
@@ -2761,7 +2765,7 @@ actions:
                 docs: |-
                   Firefox provides an option for Enhanced Tracking Protection [1], which blocks trackers that
                   gather information about your browsing behavior without disrupting site functionality [1].
-                  This feature also includes protections against harmful scripts such as malware that drains
+                  This feature also includes protections against harmful scripts such as malware that drain
                   your battery [1].
 
                   This script enables the `privacy.resistFingerprinting` preference,
@@ -2791,7 +2795,7 @@ actions:
                   This script enables the `privacy.resistFingerprinting` preference, activating
                   anti-fingerprinting [1][2].
 
-                  As an experimental feature, it might cause some website breakage [2], such as impacting web
+                  As an experimental feature, it might cause some website breakages [2], such as impacting web
                   speech functionality [3] and favicons [4].
 
                   [1]: https://web.archive.org/web/20221025201025/https://support.mozilla.org/en-US/kb/firefox-protection-against-fingerprinting "Firefox's protection against fingerprinting | Firefox Help | support.mozilla.org"
@@ -2876,7 +2880,7 @@ actions:
 
                   It's configured to be enabled in nightly, aurora, beta, or default (developer) builds.
                   In release builds, however, it's set to false [1]. This setting is hard-coded into the C++
-                  code to prevent easy disabling [2]. Developers have been approached about this issue but
+                  code to prevent easy disabling [2]. Developers have been approached about this issue, but
                   have rejected proposals to unlock it [3].
 
                   Mozilla's plan is to deprecate this setting eventually, followed by removal [1].
@@ -2887,7 +2891,7 @@ actions:
                   setting [4].
 
                   [1]: https://web.archive.org/web/20221015102124/https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html "Preferences and Defines — Firefox Source Docs documentation | firefox-source-docs.mozilla.org"
-                  [2]: https://web.archive.org/web/20221015102305/https://searchfox.org/mozilla-central/source/modules/libpref/Preferences.cpp#3213
+                  [2]: https://web.archive.org/web/20221015102338/https://searchfox.org/mozilla-central/source/modules/libpref/Preferences.cpp#3213
                   [3]: https://web.archive.org/web/20221015102419/https://bugzilla.mozilla.org/show_bug.cgi?id=1422689#c1
                   [4]: https://web.archive.org/web/20221015102604/https://stigviewer.com/stig/mozilla_firefox/2020-12-10/finding/V-223170
                 call:
@@ -3012,7 +3016,7 @@ actions:
                     recommend: standard
                     docs: |-
                       This script sets `toolkit.telemetry.server` to be empty.
-                      This preference defines the server to which Telemetry pings are sent [1].
+                      This preference defines the server to which telemetry pings are sent [1].
 
                       [1]: https://web.archive.org/web/20221015102124/https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html "Preferences and Defines — Firefox Source Docs documentation | firefox-source-docs.mozilla.org"
                     call:
@@ -3133,7 +3137,7 @@ actions:
                 name: Disable Firefox Pioneer study monitoring
                 recommend: standard
                 docs: |-
-                  This script configures `toolkit.telemetry.pioneer-new-studies-available` to be disabled to opt out.
+                  This script configures `toolkit.telemetry.pioneer-new-studies-available` to be disabled to opt out
                   Firefox Pioneer program.
 
                   This setting disables availability check for Firefox Pioneer studies [1].
@@ -3173,7 +3177,7 @@ actions:
               portal is in place and blocking traffic, this feature prevents all other connection attempts,
               possibly revealing your usage habits.
 
-              See also: [Captive portal | Wikipedia](https://web.archive.org/web/20221029223534/https://en.wikipedia.org/wiki/Captive_portal).
+              See also: [Captive portal | Wikipedia](https://web.archive.org/web/20221029163002/https://en.wikipedia.org/wiki/Captive_portal).
 
               This script sets `network.captive-portal-service.enabled` to 'false', thereby disabling automatic
               connections [1].
@@ -3207,7 +3211,7 @@ actions:
               There have been concerns about the potential for Google Safe Browsing to be used for censorship
               in the future, although this has not occurred as of yet [3].
 
-              [1]: https://web.archive.org/web/20221025192643/https://wiki.mozilla.org/Security/Safe_Browsing "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
+              [1]: https://web.archive.org/web/20221026164502/https://wiki.mozilla.org/Security/Safe_Browsing "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
               [2]: https://web.archive.org/web/20221025193000/https://support.mozilla.org/en-US/kb/how-does-phishing-and-malware-protection-work#w_what-information-is-sent-to-mozilla-or-its-partners-when-phishing-and-malware-protection-is-enabled
               [3]: https://web.archive.org/web/20221025192516/https://www.usnews.com/opinion/articles/2016-06-22/google-is-the-worlds-biggest-censor-and-its-power-must-be-regulated "Google Is the World's Biggest Censor and Its Power Must Be Regulated | usnews.com"
             children:
@@ -3226,7 +3230,7 @@ actions:
 
                   If this blocking is removed, the user should be knowledgeable about the potential risks and will take precautions.
 
-                  [1]: https://web.archive.org/web/20221025192643/https://wiki.mozilla.org/Security/Safe_Browsing#Prefs "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
+                  [1]: https://web.archive.org/web/20221026164502/https://wiki.mozilla.org/Security/Safe_Browsing#Prefs "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
                   [2]: https://web.archive.org/web/20230811024650/https://blog.mozilla.org/addons/2020/08/24/introducing-a-scalable-add-ons-blocklist/ "Introducing a scalable add-ons blocklist | Mozilla Add-ons Community Blog"
                 call:
                   function: AddFirefoxPrefs
@@ -3286,7 +3290,7 @@ actions:
 
                   It is active by default [2].
 
-                  [1]: https://web.archive.org/web/20221025192643/https://wiki.mozilla.org/Security/Safe_Browsing#Prefs "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
+                  [1]: https://web.archive.org/web/20221026164502/https://wiki.mozilla.org/Security/Safe_Browsing#Prefs "Security/Safe Browsing - MozillaWiki | wiki.mozilla.org"
                   [2]: https://web.archive.org/web/20221029173442/https://github.com/mozilla/policy-templates/blob/master/README.md#preferences "policy-templates/README.md at master · mozilla/policy-templates · GitHub | github.com"
                 call:
                   function: AddFirefoxPrefs
@@ -3572,8 +3576,11 @@ functions:
             revertCode: '{{ with $revertCodeComment }}# {{ . }}{{ end }}'
   -
     name: DeleteFiles
+    # 💡 Purpose:
+    #   Deletes files but does not touch any directories.
+    #   Use `DeleteDirectory` or `ClearDirectoryContents` to delete directories.
     parameters:
-      - name: fileGlob
+      - name: fileGlob  # File glob pattern to delete.
     call:
       -
         function: Comment
@@ -3711,7 +3718,7 @@ functions:
     #   User-specific:
     #     [~/.profile]
     #       User-specific shell initialization scripts.
-    #       ✅ Recomended by Debian to edit for user-specific environment variables.
+    #       ✅ Recommended by Debian to edit for user-specific environment variables.
     #     [~/.bashrc]
     #       User-based configuration file to set environment variables for Bash shell.
     #       ❌ Bash-specific.
@@ -3783,7 +3790,7 @@ functions:
       if [[ -f "$cronjob_path" ]]; then
         if [[ -x "$cronjob_path" ]]; then
           sudo chmod -x "$cronjob_path"
-          echo "Succesfully disabled cronjob \"$job_name\"."
+          echo "Successfully disabled cronjob \"$job_name\"."
         else
           echo "Skipping, cronjob \"$job_name\" is already disabled."
         fi
@@ -3797,7 +3804,7 @@ functions:
           echo "Skipping, cronjob \"$job_name\" is already enabled."
         else
           sudo chmod +x "$cronjob_path"
-          echo "Succesfully enabled cronjob \"$job_name\"."
+          echo "Successfully enabled cronjob \"$job_name\"."
         fi
       else
         >&2 echo "Failed to enable cronjob \"$job_name\" because it's missing."
@@ -3939,7 +3946,7 @@ functions:
         echo "Backup file exists: $file."
         sudo mv "$backup_file" "$file"
         echo "Moved to: $file."
-        echo "Succesfully restored."
+        echo "Successfully restored."
       else
         >&2 echo "Failed to restore, backup file could not be found at $backup_file."
         >&2 echo "Was the change initially applied by privacy.sexy?"
@@ -3976,6 +3983,7 @@ functions:
     # 💡 Purpose:
     #   Empties the contents of a directory recursively (including all of its files and subfolders) while preserving
     #   the directory itself.
+    #   This is beneficial when other applications depend on the existence of the directory.
     #   Marked: refactor-with-partials
     #     Same function as macOS
     parameters:

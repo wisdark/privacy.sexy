@@ -1,8 +1,8 @@
 import {
-  WatchSource, shallowReadonly, ref, watch,
+  type WatchSource, shallowReadonly, ref, watch,
 } from 'vue';
 import { AsyncLazy } from '@/infrastructure/Threading/AsyncLazy';
-import { IconName } from './IconName';
+import type { IconName } from './IconName';
 
 export function useSvgLoader(
   iconWatcher: WatchSource<IconName>,
@@ -48,8 +48,9 @@ async function loadSvg(name: IconName, loaders: FileLoaders): Promise<string> {
   return modifiedContent;
 }
 
-const RawSvgLoaders = import.meta.glob('@/presentation/assets/icons/**/*.svg', {
-  as: 'raw', // This will load the SVG file content as a string.
+const RawSvgLoaders: FileLoaders = import.meta.glob<string>('@/presentation/assets/icons/**/*.svg', {
+  query: '?raw',
+  import: 'default',
   /*
     Using `eager: true` to preload all icons.
     Pros:

@@ -6,17 +6,17 @@ import { ScriptStub } from '@tests/unit/shared/Stubs/ScriptStub';
 import { getCategoryNodeId } from '@/presentation/components/Scripts/View/Tree/TreeViewAdapter/CategoryNodeMetadataConverter';
 import { UserSelectionStub } from '@tests/unit/shared/Stubs/UserSelectionStub';
 import { SelectedScriptStub } from '@tests/unit/shared/Stubs/SelectedScriptStub';
-import { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
+import type { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
 import { CategorySelectionStub } from '@tests/unit/shared/Stubs/CategorySelectionStub';
-import { IScript } from '@/domain/IScript';
+import type { Script } from '@/domain/Executables/Script/Script';
 
 describe('CategoryReverter', () => {
   describe('getState', () => {
     // arrange
     const testScenarios: ReadonlyArray<{
       readonly description: string;
-      readonly allScripts: readonly IScript[];
-      readonly selectScripts: (allScripts: readonly IScript[]) => readonly SelectedScript[];
+      readonly allScripts: readonly Script[];
+      readonly selectScripts: (allScripts: readonly Script[]) => readonly SelectedScript[];
       readonly expectedState: boolean;
     }> = [
       {

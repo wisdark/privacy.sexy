@@ -1,7 +1,7 @@
 import type {
   FunctionCallData, CallScriptData, CodeScriptData,
 } from '@/application/collections/';
-import { RecommendationLevel } from '@/domain/RecommendationLevel';
+import { RecommendationLevel } from '@/domain/Executables/Script/RecommendationLevel';
 import { FunctionCallDataStub } from '@tests/unit/shared/Stubs/FunctionCallDataStub';
 
 export function createScriptDataWithCode(): ScriptDataStub & CodeScriptData {
@@ -19,7 +19,7 @@ export function createScriptDataWithCall(
   } else {
     instance = instance.withMockCall();
   }
-  return instance;
+  return instance as ScriptDataStub & CallScriptData;
 }
 
 export function createScriptDataWithoutCallOrCodes(): ScriptDataStub {
@@ -50,12 +50,12 @@ class ScriptDataStub implements CallScriptData, CodeScriptData {
     return this;
   }
 
-  public withCode(code: string): this {
+  public withCode(code: string): this & CodeScriptData {
     this.code = code;
     return this;
   }
 
-  public withRevertCode(revertCode: string | undefined): this {
+  public withRevertCode(revertCode: string | undefined): this & CodeScriptData {
     this.revertCode = revertCode;
     return this;
   }

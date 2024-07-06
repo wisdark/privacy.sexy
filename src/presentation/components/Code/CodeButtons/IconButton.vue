@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { IconName } from '@/presentation/components/Shared/Icon/IconName';
+import { defineComponent, type PropType } from 'vue';
+import type { IconName } from '@/presentation/components/Shared/Icon/IconName';
 import AppIcon from '@/presentation/components/Shared/Icon/AppIcon.vue';
 
 export default defineComponent({
@@ -74,7 +74,6 @@ export default defineComponent({
   color: $color-on-secondary;
 
   border: none;
-  padding: 20px;
   transition-duration: 0.4s;
   overflow: hidden;
   box-shadow: 0 3px 9px $color-primary-darkest;

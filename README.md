@@ -60,8 +60,8 @@
   <br />
   <a href="https://github.com/undergroundwires/privacy.sexy/actions/workflows/checks.quality.yaml" target="_blank" rel="noopener noreferrer">
     <img
-      alt="Quality checks status"
-      src="https://github.com/undergroundwires/privacy.sexy/workflows/quality-checks/badge.svg"
+      alt="Status of quality checks"
+      src="https://github.com/undergroundwires/privacy.sexy/workflows/checks.quality/badge.svg"
     />
   </a>
   <a href="https://github.com/undergroundwires/privacy.sexy/actions/workflows/checks.build.yaml" target="_blank" rel="noopener noreferrer">
@@ -122,9 +122,12 @@
 ## Get started
 
 - 🌍️ **Online**: [https://privacy.sexy](https://privacy.sexy).
-- 🖥️ **Offline**: Download directly for: [Windows](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.0/privacy.sexy-Setup-0.13.0.exe), [macOS](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.0/privacy.sexy-0.13.0.dmg), [Linux](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.0/privacy.sexy-0.13.0.AppImage). For more options, see [here](#additional-install-options).
+- 🖥️ **Offline**: Download directly for: [Windows](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.5/privacy.sexy-Setup-0.13.5.exe), [macOS](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.5/privacy.sexy-0.13.5.dmg), [Linux](https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.5/privacy.sexy-0.13.5.AppImage). For more options, see [here](#additional-install-options).
 
-For a detailed comparison of features between the desktop and web versions of privacy.sexy, see [Desktop vs. Web Features](./docs/desktop-vs-web-features.md).
+See also:
+
+- [Desktop vs. Web Features](./docs/desktop/desktop-vs-web-features.md): Differences and unique aspects of desktop and web versions.
+- [System Requirements](./docs/desktop/system-requirements.md): Hardware and software requirements for the desktop version.
 
 💡 Regularly applying your configuration with privacy.sexy is recommended, especially after each new release and major operating system updates. Each version updates scripts to enhance stability, privacy, and security.
 
@@ -183,3 +186,7 @@ Check [architecture.md](./docs/architecture.md) for an overview of design and ho
 Security is a top priority at privacy.sexy.
 An extensive commitment to security verification ensures this priority.
 For any security concerns or vulnerabilities, please consult the [Security Policy](./SECURITY.md).
+
+## Supporters
+
+[![Supporters appreciation banner showing the supporters](https://undergroundwires.dev/img/supporters.jpg)](https://undergroundwires.dev/supporters)

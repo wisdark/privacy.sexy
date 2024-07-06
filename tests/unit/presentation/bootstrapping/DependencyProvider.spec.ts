@@ -1,9 +1,11 @@
 import { describe } from 'vitest';
 import { VueDependencyInjectionApiStub } from '@tests/unit/shared/Stubs/VueDependencyInjectionApiStub';
 import { InjectionKeys } from '@/presentation/injectionSymbols';
-import { provideDependencies, VueDependencyInjectionApi } from '@/presentation/bootstrapping/DependencyProvider';
+import { provideDependencies, type VueDependencyInjectionApi } from '@/presentation/bootstrapping/DependencyProvider';
 import { ApplicationContextStub } from '@tests/unit/shared/Stubs/ApplicationContextStub';
-import { itIsSingleton } from '@tests/unit/shared/TestCases/SingletonTests';
+import { itIsSingletonFactory } from '@tests/unit/shared/TestCases/SingletonFactoryTests';
+import type { IApplicationContext } from '@/application/Context/IApplicationContext';
+import { itIsTransientFactory } from '@tests/unit/shared/TestCases/TransientFactoryTests';
 
 describe('DependencyProvider', () => {
   describe('provideDependencies', () => {
@@ -21,6 +23,7 @@ describe('DependencyProvider', () => {
       useCodeRunner: createTransientTests(),
       useDialog: createTransientTests(),
       useScriptDiagnosticsCollector: createTransientTests(),
+      useAutoUnsubscribedEventListener: createTransientTests(),
     };
     Object.entries(testCases).forEach(([key, runTests]) => {
       const registeredKey = InjectionKeys[key].key;
@@ -44,19 +47,22 @@ function createTransientTests() {
       const registeredObject = api.inject(injectionKey);
       expect(registeredObject).to.be.instanceOf(Function);
     });
-    it('should return different instances for transient dependency', () => {
+    describe('should return different instances for transient dependency', () => {
       // arrange
       const api = new VueDependencyInjectionApiStub();
-      // act
       new ProvideDependenciesBuilder()
         .withApi(api)
         .provideDependencies();
-      // expect
-      const registeredObject = api.inject(injectionKey);
-      const factory = registeredObject as () => unknown;
-      const firstResult = factory();
-      const secondResult = factory();
-      expect(firstResult).to.not.equal(secondResult);
+      // act
+      const getFactoryResult = () => {
+        const registeredObject = api.inject(injectionKey);
+        const factory = registeredObject as () => unknown;
+        return factory();
+      };
+      // assert
+      itIsTransientFactory({
+        getter: getFactoryResult,
+      });
     });
   };
 }
@@ -74,30 +80,35 @@ function createSingletonTests() {
       const registeredObject = api.inject(injectionKey);
       expect(registeredObject).to.be.instanceOf(Object);
     });
-    it('should return the same instance for singleton dependency', () => {
-      itIsSingleton({
-        getter: () => {
-          // arrange
-          const api = new VueDependencyInjectionApiStub();
-          // act
-          new ProvideDependenciesBuilder()
-            .withApi(api)
-            .provideDependencies();
-          // expect
-          const registeredObject = api.inject(injectionKey);
-          return registeredObject;
-        },
+    describe('should return the same instance for singleton dependency', () => {
+      // arrange
+      const singletonContext = new ApplicationContextStub();
+      const api = new VueDependencyInjectionApiStub();
+      new ProvideDependenciesBuilder()
+        .withContext(singletonContext)
+        .withApi(api)
+        .provideDependencies();
+      // act
+      const getRegisteredInstance = () => api.inject(injectionKey);
+      // assert
+      itIsSingletonFactory({
+        getter: getRegisteredInstance,
       });
     });
   };
 }
 class ProvideDependenciesBuilder {
-  private context = new ApplicationContextStub();
+  private context: IApplicationContext = new ApplicationContextStub();
 
   private api: VueDependencyInjectionApi = new VueDependencyInjectionApiStub();
 
   public withApi(api: VueDependencyInjectionApi): this {
     this.api = api;
+    return this;
+  }
+
+  public withContext(context: IApplicationContext): this {
+    this.context = context;
     return this;
   }
 

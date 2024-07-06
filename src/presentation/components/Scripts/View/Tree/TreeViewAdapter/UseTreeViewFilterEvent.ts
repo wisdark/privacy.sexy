@@ -1,16 +1,16 @@
 import {
-  Ref, shallowReadonly, shallowRef,
+  type Ref, shallowReadonly, shallowRef,
 } from 'vue';
-import { IScript } from '@/domain/IScript';
-import { ICategory } from '@/domain/ICategory';
+import type { Script } from '@/domain/Executables/Script/Script';
+import type { Category } from '@/domain/Executables/Category/Category';
 import { injectKey } from '@/presentation/injectionSymbols';
-import { ReadonlyFilterContext } from '@/application/Context/State/Filter/FilterContext';
-import { FilterResult } from '@/application/Context/State/Filter/Result/FilterResult';
-import { TreeViewFilterEvent, createFilterRemovedEvent, createFilterTriggeredEvent } from '../TreeView/Bindings/TreeInputFilterEvent';
-import { NodeMetadata } from '../NodeContent/NodeMetadata';
-import { ReadOnlyTreeNode } from '../TreeView/Node/TreeNode';
+import type { ReadonlyFilterContext } from '@/application/Context/State/Filter/FilterContext';
+import type { FilterResult } from '@/application/Context/State/Filter/Result/FilterResult';
+import { type TreeViewFilterEvent, createFilterRemovedEvent, createFilterTriggeredEvent } from '../TreeView/Bindings/TreeInputFilterEvent';
 import { getNodeMetadata } from './TreeNodeMetadataConverter';
 import { getCategoryNodeId, getScriptNodeId } from './CategoryNodeMetadataConverter';
+import type { NodeMetadata } from '../NodeContent/NodeMetadata';
+import type { ReadOnlyTreeNode } from '../TreeView/Node/TreeNode';
 
 type TreeNodeFilterResultPredicate = (
   node: ReadOnlyTreeNode,
@@ -76,10 +76,10 @@ function filterMatches(node: NodeMetadata, filter: FilterResult): boolean {
     || containsCategory(node, filter.categoryMatches);
 }
 
-function containsScript(expected: NodeMetadata, scripts: readonly IScript[]) {
-  return scripts.some((existing: IScript) => expected.id === getScriptNodeId(existing));
+function containsScript(expected: NodeMetadata, scripts: readonly Script[]) {
+  return scripts.some((existing: Script) => expected.id === getScriptNodeId(existing));
 }
 
-function containsCategory(expected: NodeMetadata, categories: readonly ICategory[]) {
-  return categories.some((existing: ICategory) => expected.id === getCategoryNodeId(existing));
+function containsCategory(expected: NodeMetadata, categories: readonly Category[]) {
+  return categories.some((existing: Category) => expected.id === getCategoryNodeId(existing));
 }

@@ -19,9 +19,9 @@ import {
 import { injectKey } from '@/presentation/injectionSymbols';
 import { NonCollapsing } from '@/presentation/components/Scripts/View/Cards/NonCollapsingDirective';
 import AppIcon from '@/presentation/components/Shared/Icon/AppIcon.vue';
-import { ReadonlyFilterContext } from '@/application/Context/State/Filter/FilterContext';
-import { FilterResult } from '@/application/Context/State/Filter/Result/FilterResult';
-import { IEventSubscription } from '@/infrastructure/Events/IEventSource';
+import type { ReadonlyFilterContext } from '@/application/Context/State/Filter/FilterContext';
+import type { FilterResult } from '@/application/Context/State/Filter/Result/FilterResult';
+import type { IEventSubscription } from '@/infrastructure/Events/IEventSource';
 
 export default defineComponent({
   components: { AppIcon },
@@ -106,10 +106,9 @@ export default defineComponent({
   min-width: 60px;
   border: 1.5px solid $color-primary;
   border-right: none;
-  height: 36px;
   border-radius: 3px 0 0 3px;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left: $spacing-absolute-medium;
+  padding-right: $spacing-absolute-medium;
   outline: none;
   color: $color-primary;
   font-size: $font-size-absolute-normal;
@@ -127,6 +126,6 @@ export default defineComponent({
   color: $color-on-primary;
   border-radius: 0 5px 5px 0;
   font-size: $font-size-absolute-large;
-  padding:5px;
+  padding: $spacing-absolute-x-small;
 }
 </style>

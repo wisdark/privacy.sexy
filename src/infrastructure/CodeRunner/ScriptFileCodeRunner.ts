@@ -1,18 +1,18 @@
-import { Logger } from '@/application/Common/Log/Logger';
+import type { Logger } from '@/application/Common/Log/Logger';
 import { ScriptFilename } from '@/application/CodeRunner/ScriptFilename';
-import {
+import type {
   CodeRunError, CodeRunOutcome, CodeRunner, FailedCodeRun,
 } from '@/application/CodeRunner/CodeRunner';
 import { ElectronLogger } from '../Log/ElectronLogger';
-import { ScriptFileExecutor } from './Execution/ScriptFileExecutor';
-import { ScriptFileCreator } from './Creation/ScriptFileCreator';
 import { ScriptFileCreationOrchestrator } from './Creation/ScriptFileCreationOrchestrator';
-import { VisibleTerminalScriptExecutor } from './Execution/VisibleTerminalScriptFileExecutor';
+import { VisibleTerminalFileRunner } from './Execution/VisibleTerminalFileRunner';
+import type { ScriptFileExecutor } from './Execution/ScriptFileExecutor';
+import type { ScriptFileCreator } from './Creation/ScriptFileCreator';
 
 export class ScriptFileCodeRunner implements CodeRunner {
   constructor(
     private readonly scriptFileExecutor
-    : ScriptFileExecutor = new VisibleTerminalScriptExecutor(),
+    : ScriptFileExecutor = new VisibleTerminalFileRunner(),
     private readonly scriptFileCreator: ScriptFileCreator = new ScriptFileCreationOrchestrator(),
     private readonly logger: Logger = ElectronLogger,
   ) { }

@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { DebounceFunction, DebouncedScriptSelection } from '@/application/Context/State/Selection/Script/DebouncedScriptSelection';
+import { type DebounceFunction, DebouncedScriptSelection } from '@/application/Context/State/Selection/Script/DebouncedScriptSelection';
 import { CategoryStub } from '@tests/unit/shared/Stubs/CategoryStub';
 import { CategoryCollectionStub } from '@tests/unit/shared/Stubs/CategoryCollectionStub';
 import { SelectedScriptStub } from '@tests/unit/shared/Stubs/SelectedScriptStub';
 import { ScriptStub } from '@tests/unit/shared/Stubs/ScriptStub';
-import { ICategoryCollection } from '@/domain/ICategoryCollection';
-import { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
+import type { ICategoryCollection } from '@/domain/ICategoryCollection';
+import type { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
 import { BatchedDebounceStub } from '@tests/unit/shared/Stubs/BatchedDebounceStub';
-import { ScriptSelectionChange, ScriptSelectionChangeCommand } from '@/application/Context/State/Selection/Script/ScriptSelectionChange';
+import type { ScriptSelectionChange, ScriptSelectionChangeCommand } from '@/application/Context/State/Selection/Script/ScriptSelectionChange';
 import { expectExists } from '@tests/shared/Assertions/ExpectExists';
-import { IScript } from '@/domain/IScript';
+import type { Script } from '@/domain/Executables/Script/Script';
 import { expectEqualSelectedScripts } from './ExpectEqualSelectedScripts';
 
 type DebounceArg = ScriptSelectionChangeCommand;
@@ -538,7 +538,7 @@ describe('DebouncedScriptSelection', () => {
   });
 });
 
-function createCollectionWithScripts(...scripts: IScript[]): CategoryCollectionStub {
+function createCollectionWithScripts(...scripts: Script[]): CategoryCollectionStub {
   const category = new CategoryStub(1).withScripts(...scripts);
   const collection = new CategoryCollectionStub().withAction(category);
   return collection;

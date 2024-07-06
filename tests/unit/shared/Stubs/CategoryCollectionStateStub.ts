@@ -1,12 +1,12 @@
-import { IApplicationCode } from '@/application/Context/State/Code/IApplicationCode';
-import { ICategoryCollectionState } from '@/application/Context/State/ICategoryCollectionState';
+import type { IApplicationCode } from '@/application/Context/State/Code/IApplicationCode';
+import type { ICategoryCollectionState } from '@/application/Context/State/ICategoryCollectionState';
 import { OperatingSystem } from '@/domain/OperatingSystem';
-import { IScript } from '@/domain/IScript';
+import type { Script } from '@/domain/Executables/Script/Script';
 import { ScriptStub } from '@tests/unit/shared/Stubs/ScriptStub';
-import { ICategoryCollection } from '@/domain/ICategoryCollection';
-import { UserSelection } from '@/application/Context/State/Selection/UserSelection';
-import { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
-import { FilterContext } from '@/application/Context/State/Filter/FilterContext';
+import type { ICategoryCollection } from '@/domain/ICategoryCollection';
+import type { UserSelection } from '@/application/Context/State/Selection/UserSelection';
+import type { SelectedScript } from '@/application/Context/State/Selection/Script/SelectedScript';
+import type { FilterContext } from '@/application/Context/State/Filter/FilterContext';
 import { CategoryCollectionStub } from './CategoryCollectionStub';
 import { UserSelectionStub } from './UserSelectionStub';
 import { FilterContextStub } from './FilterContextStub';
@@ -27,7 +27,7 @@ export class CategoryCollectionStateStub implements ICategoryCollectionState {
 
   public selection: UserSelection = new UserSelectionStub();
 
-  constructor(readonly allScripts: IScript[] = [new ScriptStub('script-id')]) {
+  constructor(readonly allScripts: Script[] = [new ScriptStub('script-id')]) {
     this.selection = new UserSelectionStub()
       .withScripts(new ScriptSelectionStub());
     this.collection = new CategoryCollectionStub()

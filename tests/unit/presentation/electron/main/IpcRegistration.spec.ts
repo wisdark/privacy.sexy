@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { CodeRunnerStub } from '@tests/unit/shared/Stubs/CodeRunnerStub';
-import { ChannelDefinitionKey, IpcChannelDefinitions } from '@/presentation/electron/shared/IpcBridging/IpcChannelDefinitions';
+import { type ChannelDefinitionKey, IpcChannelDefinitions } from '@/presentation/electron/shared/IpcBridging/IpcChannelDefinitions';
 import {
-  CodeRunnerFactory, DialogFactory, IpcChannelRegistrar,
-  ScriptDiagnosticsCollectorFactory, registerAllIpcChannels,
+  type CodeRunnerFactory, type DialogFactory, type IpcChannelRegistrar,
+  type ScriptDiagnosticsCollectorFactory, registerAllIpcChannels,
 } from '@/presentation/electron/main/IpcRegistration';
-import { IpcChannel } from '@/presentation/electron/shared/IpcBridging/IpcChannel';
+import type { IpcChannel } from '@/presentation/electron/shared/IpcBridging/IpcChannel';
 import { expectExists } from '@tests/shared/Assertions/ExpectExists';
 import { collectExceptionMessage } from '@tests/unit/shared/ExceptionCollector';
 import { DialogStub } from '@tests/unit/shared/Stubs/DialogStub';
@@ -13,7 +13,7 @@ import { ScriptDiagnosticsCollectorStub } from '../../../shared/Stubs/ScriptDiag
 
 describe('IpcRegistration', () => {
   describe('registerAllIpcChannels', () => {
-    it('registers all defined IPC channels', () => {
+    describe('registers all defined IPC channels', () => {
       Object.entries(IpcChannelDefinitions).forEach(([key, expectedChannel]) => {
         it(key, () => {
           // arrange
@@ -49,7 +49,7 @@ describe('IpcRegistration', () => {
         ScriptDiagnosticsCollector: (() => {
           const expectedInstance = new ScriptDiagnosticsCollectorStub();
           return {
-            buildContext: (c) => c.witScriptDiagnosticsCollectorFactory(() => expectedInstance),
+            buildContext: (c) => c.withScriptDiagnosticsCollectorFactory(() => expectedInstance),
             expectedInstance,
           };
         })(),
@@ -112,7 +112,7 @@ class IpcRegistrationTestSetup {
     return this;
   }
 
-  public witScriptDiagnosticsCollectorFactory(
+  public withScriptDiagnosticsCollectorFactory(
     scriptDiagnosticsCollectorFactory: ScriptDiagnosticsCollectorFactory,
   ): this {
     this.scriptDiagnosticsCollectorFactory = scriptDiagnosticsCollectorFactory;

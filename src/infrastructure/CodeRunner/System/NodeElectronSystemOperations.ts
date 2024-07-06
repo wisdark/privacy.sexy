@@ -2,10 +2,13 @@ import { join } from 'node:path';
 import { chmod, mkdir } from 'node:fs/promises';
 import { exec } from 'node:child_process';
 import { app } from 'electron/main';
-import {
+import type {
   CommandOps, FileSystemOps, LocationOps, OperatingSystemOps, SystemOperations,
 } from './SystemOperations';
 
+/**
+ * Thin wrapper for Node and Electron APIs.
+ */
 export class NodeElectronSystemOperations implements SystemOperations {
   public readonly operatingSystem: OperatingSystemOps = {
     /*
@@ -49,13 +52,6 @@ export class NodeElectronSystemOperations implements SystemOperations {
   };
 
   public readonly command: CommandOps = {
-    exec: (command) => new Promise((resolve, reject) => {
-      exec(command, (error) => {
-        if (error) {
-          reject(error);
-        }
-        resolve();
-      });
-    }),
+    exec,
   };
 }

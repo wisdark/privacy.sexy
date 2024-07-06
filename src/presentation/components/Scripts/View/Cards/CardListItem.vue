@@ -3,7 +3,6 @@
     ref="cardElement"
     class="card"
     :class="{
-      'is-collapsed': !isExpanded,
       'is-inactive': activeCategoryId && activeCategoryId !== categoryId,
       'is-expanded': isExpanded,
     }"
@@ -29,20 +28,28 @@
         :category-id="categoryId"
       />
     </div>
-    <div class="card__expander" @click.stop>
-      <div class="card__expander__close-button">
-        <FlatButton
-          icon="xmark"
-          @click="collapse()"
-        />
+    <CardExpandTransition>
+      <div v-show="isExpanded">
+        <CardExpansionArrow />
+        <div
+          class="card__expander"
+          @click.stop
+        >
+          <div class="card__expander__close-button">
+            <FlatButton
+              icon="xmark"
+              @click="collapse()"
+            />
+          </div>
+          <div class="card__expander__content">
+            <ScriptsTree
+              :category-id="categoryId"
+              :has-top-padding="false"
+            />
+          </div>
+        </div>
       </div>
-      <div class="card__expander__content">
-        <ScriptsTree
-          :category-id="categoryId"
-          :has-top-padding="false"
-        />
-      </div>
-    </div>
+    </CardExpandTransition>
   </div>
 </template>
 
@@ -56,6 +63,8 @@ import { injectKey } from '@/presentation/injectionSymbols';
 import ScriptsTree from '@/presentation/components/Scripts/View/Tree/ScriptsTree.vue';
 import { sleep } from '@/infrastructure/Threading/AsyncSleep';
 import CardSelectionIndicator from './CardSelectionIndicator.vue';
+import CardExpandTransition from './CardExpandTransition.vue';
+import CardExpansionArrow from './CardExpansionArrow.vue';
 
 export default defineComponent({
   components: {
@@ -63,6 +72,8 @@ export default defineComponent({
     AppIcon,
     CardSelectionIndicator,
     FlatButton,
+    CardExpandTransition,
+    CardExpansionArrow,
   },
   props: {
     categoryId: {
@@ -127,16 +138,14 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @use "@/presentation/assets/styles/main" as *;
+@use "./card-gap" as *;
 
-$card-inner-padding     : 30px;
-$arrow-size             : 15px;
-$expanded-margin-top    : 30px;
+$card-inner-padding     : $spacing-absolute-xx-large;
+$expanded-margin-top    : $spacing-absolute-xx-large;
 $card-horizontal-gap    : $card-gap;
 
 .card {
-  transition: all 0.2s ease-in-out;
-
-  &__inner {
+  .card__inner {
     padding-top: $card-inner-padding;
     padding-right: $card-inner-padding;
     padding-bottom: 0;
@@ -149,7 +158,7 @@ $card-horizontal-gap    : $card-gap;
     width: 100%;
     text-transform: uppercase;
     text-align: center;
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 
     display:flex;
     flex-direction: column;
@@ -159,9 +168,6 @@ $card-horizontal-gap    : $card-gap;
       background-color: $color-secondary;
       color: $color-on-secondary;
       transform: scale(1.05);
-    }
-    &:after {
-      transition: all 0.3s ease-in-out;
     }
     .card__inner__title {
       display: flex;
@@ -173,19 +179,18 @@ $card-horizontal-gap    : $card-gap;
     .card__inner__selection_indicator {
       height: $card-inner-padding;
       margin-right: -$card-inner-padding;
-      padding-right: 10px;
+      padding-right: $spacing-absolute-medium;
       display: flex;
       justify-content: flex-end;
     }
     .card__inner__expand-icon {
       width: 100%;
-      margin-top: .25em;
+      margin-top: $spacing-relative-x-small;
       vertical-align: middle;
       font-size: $font-size-absolute-normal;
     }
   }
   .card__expander {
-    transition: all 0.2s ease-in-out;
     position: relative;
     background-color: $color-primary-darker;
     color: $color-on-primary;
@@ -205,7 +210,7 @@ $card-horizontal-gap    : $card-gap;
     .card__expander__close-button {
       font-size: $font-size-absolute-large;
       align-self: flex-end;
-      margin-right: 0.25em;
+      margin-right: $spacing-absolute-small;
       @include clickable;
       color: $color-primary-light;
       @include hover-or-touch {
@@ -214,43 +219,15 @@ $card-horizontal-gap    : $card-gap;
     }
   }
 
-  &.is-collapsed {
-    .card__inner {
-      &:after {
-        content: "";
-        opacity: 0;
-      }
-    }
-
-    .card__expander {
-      max-height: 0;
-      min-height: 0;
-      overflow: hidden;
-      opacity: 0;
-    }
-  }
-
   &.is-expanded {
     .card__inner {
       height: auto;
       background-color: $color-secondary;
       color: $color-on-secondary;
-      &:after { // arrow
-        content: "";
-        display: block;
-        position: absolute;
-        bottom: calc(-1 * #{$expanded-margin-top});
-        left: calc(50% - #{$arrow-size});
-        border-left: #{$arrow-size} solid transparent;
-        border-right: #{$arrow-size} solid transparent;
-        border-bottom: #{$arrow-size} solid $color-primary-darker;
-      }
     }
 
     .card__expander {
-      min-height: 200px;
       margin-top: $expanded-margin-top;
-      opacity: 1;
     }
 
     @include hover-or-touch {

@@ -1,7 +1,7 @@
 import { expect } from 'vitest';
-import { Constructible } from '@/TypeHelpers';
-import { ICodeValidationRule } from '@/application/Parser/Script/Validation/ICodeValidationRule';
-import { ICodeValidator } from '@/application/Parser/Script/Validation/ICodeValidator';
+import type { Constructible } from '@/TypeHelpers';
+import type { ICodeValidationRule } from '@/application/Parser/Executable/Script/Validation/ICodeValidationRule';
+import type { ICodeValidator } from '@/application/Parser/Executable/Script/Validation/ICodeValidator';
 
 export class CodeValidatorStub implements ICodeValidator {
   public callHistory = new Array<{
@@ -19,16 +19,16 @@ export class CodeValidatorStub implements ICodeValidator {
     });
   }
 
-  public assertHistory(expected: {
+  public assertHistory(expectation: {
     validatedCodes: readonly (string | undefined)[],
     rules: readonly Constructible<ICodeValidationRule>[],
   }) {
-    expect(this.callHistory).to.have.lengthOf(expected.validatedCodes.length);
+    expect(this.callHistory).to.have.lengthOf(expectation.validatedCodes.length);
     const actualValidatedCodes = this.callHistory.map((args) => args.code);
-    expect(actualValidatedCodes.sort()).deep.equal([...expected.validatedCodes].sort());
+    expect(actualValidatedCodes.sort()).deep.equal([...expectation.validatedCodes].sort());
     for (const call of this.callHistory) {
       const actualRules = call.rules.map((rule) => rule.constructor);
-      expect(actualRules.sort()).to.deep.equal([...expected.rules].sort());
+      expect(actualRules.sort()).to.deep.equal([...expectation.rules].sort());
     }
   }
 }

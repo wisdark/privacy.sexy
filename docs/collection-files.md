@@ -1,11 +1,11 @@
 # Collection files
 
 privacy.sexy is a data-driven application that reads YAML files.
-This document details the structure and syntax of the YAML files located in [`application/collections`](./../src/application/collections/), which form the backbone of the application's data model.
+This document details the structure and syntax of the YAML files located in [`application/collections`](./../src/application/collections/), which form the backbone of the application's data model. The YAML schema [`.schema.yaml`](./../src/application/collections/.schema.yaml) is provided to provide better IDE support and be used in automated validations.
 
 Related documentation:
 
-- 📖 [`collection.yaml.d.ts`](./../src/application/collections/collection.yaml.d.ts) outlines code types.
+- 📖 [`Collections README`](./../src/application/collections/README.md) includes references to code as documentation.
 - 📖 [Script Guidelines](./script-guidelines.md) provide guidance on script creation including best-practices.
 
 ## Objects
@@ -28,11 +28,20 @@ Related documentation:
 - `scripting:` ***[`ScriptingDefinition`](#scriptingdefinition)*** **(required)**
   - Sets the scripting language for all inline code used within the collection.
 
-### `Category`
+### Executables
+
+An Executable is a logical entity that can
+
+- execute once compiled,
+- include a `docs` property for documentation.
+
+It's either [Category](#category) or a [Script](#script).
+
+#### `Category`
 
 Represents a logical group of scripts and subcategories.
 
-#### `Category` syntax
+##### `Category` syntax
 
 - `category:` *`string`*  **(required)**
   - Name of the category.
@@ -43,7 +52,7 @@ Represents a logical group of scripts and subcategories.
 - `docs`: *`string`* | `[`*`string`*`, ... ]`
   - Markdown-formatted documentation related to the category.
 
-### `Script`
+#### `Script`
 
 Represents an individual tweak.
 
@@ -58,7 +67,7 @@ Types (like [functions](#function)):
 
 📖 For detailed guidelines, see [Script Guidelines](./script-guidelines.md).
 
-#### `Script` syntax
+##### `Script` syntax
 
 - `name`: *`string`* **(required)**
   - Script name.

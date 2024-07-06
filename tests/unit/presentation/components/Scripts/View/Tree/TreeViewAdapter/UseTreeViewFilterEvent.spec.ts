@@ -1,21 +1,21 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
-import { Ref, nextTick, watch } from 'vue';
+import { type Ref, nextTick, watch } from 'vue';
 import { InjectionKeys } from '@/presentation/injectionSymbols';
 import { UseCollectionStateStub } from '@tests/unit/shared/Stubs/UseCollectionStateStub';
 import { UseAutoUnsubscribedEventsStub } from '@tests/unit/shared/Stubs/UseAutoUnsubscribedEventsStub';
 import { useTreeViewFilterEvent } from '@/presentation/components/Scripts/View/Tree/TreeViewAdapter/UseTreeViewFilterEvent';
 import { FilterResultStub } from '@tests/unit/shared/Stubs/FilterResultStub';
-import { TreeViewFilterAction, TreeViewFilterEvent } from '@/presentation/components/Scripts/View/Tree/TreeView/Bindings/TreeInputFilterEvent';
+import { TreeViewFilterAction, type TreeViewFilterEvent } from '@/presentation/components/Scripts/View/Tree/TreeView/Bindings/TreeInputFilterEvent';
 import { ScriptStub } from '@tests/unit/shared/Stubs/ScriptStub';
 import { CategoryStub } from '@tests/unit/shared/Stubs/CategoryStub';
 import { TreeNodeStub } from '@tests/unit/shared/Stubs/TreeNodeStub';
 import { HierarchyAccessStub } from '@tests/unit/shared/Stubs/HierarchyAccessStub';
-import { IScript } from '@/domain/IScript';
-import { ICategory } from '@/domain/ICategory';
-import { TreeNode } from '@/presentation/components/Scripts/View/Tree/TreeView/Node/TreeNode';
+import type { Script } from '@/domain/Executables/Script/Script';
+import type { Category } from '@/domain/Executables/Category/Category';
+import type { TreeNode } from '@/presentation/components/Scripts/View/Tree/TreeView/Node/TreeNode';
 import { FilterChangeDetailsStub } from '@tests/unit/shared/Stubs/FilterChangeDetailsStub';
-import { FilterChangeDetails } from '@/application/Context/State/Filter/Event/FilterChangeDetails';
+import type { FilterChangeDetails } from '@/application/Context/State/Filter/Event/FilterChangeDetails';
 import { CategoryCollectionStateStub } from '@tests/unit/shared/Stubs/CategoryCollectionStateStub';
 import { NodeMetadataStub } from '@tests/unit/shared/Stubs/NodeMetadataStub';
 import { expectExists } from '@tests/shared/Assertions/ExpectExists';
@@ -208,8 +208,8 @@ function itExpectedFilterTriggeredEvent(
 ) {
   const testScenarios: ReadonlyArray<{
     readonly description: string;
-    readonly scriptMatches: IScript[],
-    readonly categoryMatches: ICategory[],
+    readonly scriptMatches: Script[],
+    readonly categoryMatches: Category[],
     readonly givenNode: TreeNode,
     readonly expectedPredicateResult: boolean;
   }> = [

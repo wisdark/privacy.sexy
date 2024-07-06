@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from 'vue';
+import { defineComponent, ref, type PropType } from 'vue';
 import ExpandCollapseTransition from '@/presentation/components/Shared/ExpandCollapse/ExpandCollapseTransition.vue';
 import DocumentationText from './DocumentationText.vue';
 import ToggleDocumentationButton from './ToggleDocumentationButton.vue';
@@ -68,9 +68,7 @@ export default defineComponent({
   flex-direction: column;
   flex: 1; // Expands the container to fill available horizontal space, enabling alignment of child items.
   max-width: 100%; // Prevents horizontal expansion of inner content (e.g., when a code block is shown)
-  *:not(:first-child) {
-    margin-left: 5px;
-  }
+
   .header {
     display: flex;
     flex-direction: row;
@@ -80,10 +78,11 @@ export default defineComponent({
   }
   .docs {
     background: $color-primary-darkest;
-    margin-top: 0.25em;
+    margin-left: $spacing-absolute-small;
+    margin-top: $spacing-relative-x-small;
     color: $color-on-primary;
     text-transform: none;
-    padding: 0.5em;
+    padding: $spacing-absolute-medium;
     &-collapsed {
       display: none;
     }

@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import AppIcon from '@/presentation/components/Shared/Icon/AppIcon.vue';
 import CircleRating from './Rating/CircleRating.vue';
 
@@ -88,7 +88,7 @@ export default defineComponent({
 
 @mixin horizontal-stack {
   display: flex;
-  gap: 0.5em;
+  gap: $spacing-relative-small;
 }
 
 @mixin apply-icon-color($color) {

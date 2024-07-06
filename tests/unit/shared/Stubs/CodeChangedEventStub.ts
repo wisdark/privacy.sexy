@@ -1,15 +1,15 @@
-import { ICodeChangedEvent } from '@/application/Context/State/Code/Event/ICodeChangedEvent';
-import { ICodePosition } from '@/application/Context/State/Code/Position/ICodePosition';
-import { IScript } from '@/domain/IScript';
+import type { ICodeChangedEvent } from '@/application/Context/State/Code/Event/ICodeChangedEvent';
+import type { ICodePosition } from '@/application/Context/State/Code/Position/ICodePosition';
+import type { Script } from '@/domain/Executables/Script/Script';
 
 export class CodeChangedEventStub implements ICodeChangedEvent {
   public code: string;
 
-  public addedScripts: readonly IScript[];
+  public addedScripts: readonly Script[];
 
-  public removedScripts: readonly IScript[];
+  public removedScripts: readonly Script[];
 
-  public changedScripts: readonly IScript[];
+  public changedScripts: readonly Script[];
 
   public isEmpty(): boolean {
     throw new Error('Method not implemented.');

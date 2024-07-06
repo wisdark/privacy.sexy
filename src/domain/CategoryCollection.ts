@@ -1,32 +1,40 @@
 import { getEnumValues, assertInRange } from '@/application/Common/Enum';
-import { IEntity } from '../infrastructure/Entity/IEntity';
-import { ICategory } from './ICategory';
-import { IScript } from './IScript';
-import { RecommendationLevel } from './RecommendationLevel';
+import { RecommendationLevel } from './Executables/Script/RecommendationLevel';
 import { OperatingSystem } from './OperatingSystem';
-import { IScriptingDefinition } from './IScriptingDefinition';
-import { ICategoryCollection } from './ICategoryCollection';
+import type { IEntity } from '../infrastructure/Entity/IEntity';
+import type { Category } from './Executables/Category/Category';
+import type { Script } from './Executables/Script/Script';
+import type { IScriptingDefinition } from './IScriptingDefinition';
+import type { ICategoryCollection } from './ICategoryCollection';
 
 export class CategoryCollection implements ICategoryCollection {
+  public readonly os: OperatingSystem;
+
+  public readonly actions: ReadonlyArray<Category>;
+
+  public readonly scripting: IScriptingDefinition;
+
   public get totalScripts(): number { return this.queryable.allScripts.length; }
 
   public get totalCategories(): number { return this.queryable.allCategories.length; }
 
-  private readonly queryable: IQueryableCollection;
+  private readonly queryable: QueryableCollection;
 
   constructor(
-    public readonly os: OperatingSystem,
-    public readonly actions: ReadonlyArray<ICategory>,
-    public readonly scripting: IScriptingDefinition,
+    parameters: CategoryCollectionInitParameters,
   ) {
-    this.queryable = makeQueryable(actions);
-    assertInRange(os, OperatingSystem);
+    this.os = parameters.os;
+    this.actions = parameters.actions;
+    this.scripting = parameters.scripting;
+
+    this.queryable = makeQueryable(this.actions);
+    assertInRange(this.os, OperatingSystem);
     ensureValid(this.queryable);
     ensureNoDuplicates(this.queryable.allCategories);
     ensureNoDuplicates(this.queryable.allScripts);
   }
 
-  public getCategory(categoryId: number): ICategory {
+  public getCategory(categoryId: number): Category {
     const category = this.queryable.allCategories.find((c) => c.id === categoryId);
     if (!category) {
       throw new Error(`Missing category with ID: "${categoryId}"`);
@@ -34,13 +42,13 @@ export class CategoryCollection implements ICategoryCollection {
     return category;
   }
 
-  public getScriptsByLevel(level: RecommendationLevel): readonly IScript[] {
+  public getScriptsByLevel(level: RecommendationLevel): readonly Script[] {
     assertInRange(level, RecommendationLevel);
     const scripts = this.queryable.scriptsByLevel.get(level);
     return scripts ?? [];
   }
 
-  public getScript(scriptId: string): IScript {
+  public getScript(scriptId: string): Script {
     const script = this.queryable.allScripts.find((s) => s.id === scriptId);
     if (!script) {
       throw new Error(`missing script: ${scriptId}`);
@@ -48,11 +56,11 @@ export class CategoryCollection implements ICategoryCollection {
     return script;
   }
 
-  public getAllScripts(): IScript[] {
+  public getAllScripts(): Script[] {
     return this.queryable.allScripts;
   }
 
-  public getAllCategories(): ICategory[] {
+  public getAllCategories(): Category[] {
     return this.queryable.allCategories;
   }
 }
@@ -72,24 +80,30 @@ function ensureNoDuplicates<TKey>(entities: ReadonlyArray<IEntity<TKey>>) {
   }
 }
 
-interface IQueryableCollection {
-  allCategories: ICategory[];
-  allScripts: IScript[];
-  scriptsByLevel: Map<RecommendationLevel, readonly IScript[]>;
+export interface CategoryCollectionInitParameters {
+  readonly os: OperatingSystem;
+  readonly actions: ReadonlyArray<Category>;
+  readonly scripting: IScriptingDefinition;
 }
 
-function ensureValid(application: IQueryableCollection) {
+interface QueryableCollection {
+  readonly allCategories: Category[];
+  readonly allScripts: Script[];
+  readonly scriptsByLevel: Map<RecommendationLevel, readonly Script[]>;
+}
+
+function ensureValid(application: QueryableCollection) {
   ensureValidCategories(application.allCategories);
   ensureValidScripts(application.allScripts);
 }
 
-function ensureValidCategories(allCategories: readonly ICategory[]) {
+function ensureValidCategories(allCategories: readonly Category[]) {
   if (!allCategories.length) {
     throw new Error('must consist of at least one category');
   }
 }
 
-function ensureValidScripts(allScripts: readonly IScript[]) {
+function ensureValidScripts(allScripts: readonly Script[]) {
   if (!allScripts.length) {
     throw new Error('must consist of at least one script');
   }
@@ -102,8 +116,8 @@ function ensureValidScripts(allScripts: readonly IScript[]) {
 }
 
 function flattenApplication(
-  categories: ReadonlyArray<ICategory>,
-): [ICategory[], IScript[]] {
+  categories: ReadonlyArray<Category>,
+): [Category[], Script[]] {
   const [subCategories, subScripts] = (categories || [])
     // Parse children
     .map((category) => flattenApplication(category.subCategories))
@@ -113,7 +127,7 @@ function flattenApplication(
         [...previousCategories, ...currentCategories],
         [...previousScripts, ...currentScripts],
       ];
-    }, [new Array<ICategory>(), new Array<IScript>()]);
+    }, [new Array<Category>(), new Array<Script>()]);
   return [
     [
       ...(categories || []),
@@ -127,8 +141,8 @@ function flattenApplication(
 }
 
 function makeQueryable(
-  actions: ReadonlyArray<ICategory>,
-): IQueryableCollection {
+  actions: ReadonlyArray<Category>,
+): QueryableCollection {
   const flattened = flattenApplication(actions);
   return {
     allCategories: flattened[0],
@@ -138,8 +152,8 @@ function makeQueryable(
 }
 
 function groupByLevel(
-  allScripts: readonly IScript[],
-): Map<RecommendationLevel, readonly IScript[]> {
+  allScripts: readonly Script[],
+): Map<RecommendationLevel, readonly Script[]> {
   return getEnumValues(RecommendationLevel)
     .map((level) => ({
       level,
@@ -150,5 +164,5 @@ function groupByLevel(
     .reduce((map, group) => {
       map.set(group.level, group.scripts);
       return map;
-    }, new Map<RecommendationLevel, readonly IScript[]>());
+    }, new Map<RecommendationLevel, readonly Script[]>());
 }

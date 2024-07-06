@@ -1,12 +1,12 @@
 import { BaseEntity } from '@/infrastructure/Entity/BaseEntity';
-import { IScript } from '@/domain/IScript';
-import { SelectedScript } from './SelectedScript';
+import type { Script } from '@/domain/Executables/Script/Script';
+import type { SelectedScript } from './SelectedScript';
 
 type SelectedScriptId = SelectedScript['id'];
 
 export class UserSelectedScript extends BaseEntity<SelectedScriptId> {
   constructor(
-    public readonly script: IScript,
+    public readonly script: Script,
     public readonly revert: boolean,
   ) {
     super(script.id);

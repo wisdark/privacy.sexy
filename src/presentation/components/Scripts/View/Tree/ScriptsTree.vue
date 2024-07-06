@@ -31,8 +31,8 @@ import NodeContent from './NodeContent/NodeContent.vue';
 import { useTreeViewFilterEvent } from './TreeViewAdapter/UseTreeViewFilterEvent';
 import { useTreeViewNodeInput } from './TreeViewAdapter/UseTreeViewNodeInput';
 import { useCollectionSelectionStateUpdater } from './TreeViewAdapter/UseCollectionSelectionStateUpdater';
-import { TreeNodeStateChangedEmittedEvent } from './TreeView/Bindings/TreeNodeStateChangedEmittedEvent';
 import { useSelectedScriptNodeIds } from './TreeViewAdapter/UseSelectedScriptNodeIds';
+import type { TreeNodeStateChangedEmittedEvent } from './TreeView/Bindings/TreeNodeStateChangedEmittedEvent';
 
 export default defineComponent({
   components: {
@@ -73,7 +73,8 @@ export default defineComponent({
 <style scoped lang="scss">
 @use "@/presentation/assets/styles/main" as *;
 
-$padding: 20px;
+$padding-horizontal : $spacing-absolute-large;
+$padding-vertical   : $spacing-absolute-x-large;
 
 .scripts-tree-container {
   display: flex; // We could provide `block`, but `flex` is more versatile.
@@ -84,11 +85,11 @@ $padding: 20px;
 
   flex: 1; // Expands the container to fill available horizontal space, enabling alignment of child items.
 
-  padding-bottom: $padding;
-  padding-left: $padding;
-  padding-right: $padding;
+  padding-bottom: $padding-vertical;
+  padding-left: $padding-horizontal;
+  padding-right: $padding-horizontal;
   &.top-padding {
-    padding-top: $padding;
+    padding-top: $padding-vertical;
   }
 }
 </style>

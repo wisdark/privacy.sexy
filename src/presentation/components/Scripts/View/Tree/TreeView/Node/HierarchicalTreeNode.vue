@@ -9,7 +9,7 @@
       :tree-root="treeRoot"
     >
       <div
-        class="expand-collapse-arrow"
+        class="expand-collapse-caret"
         :class="{
           expanded: isExpanded,
           'has-children': hasChildren,
@@ -51,13 +51,13 @@
 <script lang="ts">
 import { defineComponent, computed, toRef } from 'vue';
 import ExpandCollapseTransition from '@/presentation/components/Shared/ExpandCollapse/ExpandCollapseTransition.vue';
-import { TreeRoot } from '../TreeRoot/TreeRoot';
 import { useCurrentTreeNodes } from '../UseCurrentTreeNodes';
-import { NodeRenderingStrategy } from '../Rendering/Scheduling/NodeRenderingStrategy';
 import { useNodeState } from './UseNodeState';
-import { TreeNode } from './TreeNode';
 import LeafTreeNode from './LeafTreeNode.vue';
 import InteractableNode from './InteractableNode.vue';
+import type { TreeRoot } from '../TreeRoot/TreeRoot';
+import type { TreeNode } from './TreeNode';
+import type { NodeRenderingStrategy } from '../Rendering/Scheduling/NodeRenderingStrategy';
 import type { PropType } from 'vue';
 
 export default defineComponent({
@@ -141,10 +141,13 @@ export default defineComponent({
   flex-direction: row;
   align-items: center;
 
-  .expand-collapse-arrow {
+  .expand-collapse-caret {
+    $caret-size: 24px;
+    $padding-right: $spacing-absolute-small;
+
     flex-shrink: 0;
-    height: 30px;
-    margin-left: 30px;
+    height: $caret-size;
+    margin-left: $caret-size + $padding-right;
     width: 0;
 
     @include clickable;
@@ -157,25 +160,32 @@ export default defineComponent({
 
     &.has-children {
       margin-left: 0;
-      width: 30px;
+      width: $caret-size + $padding-right;
       position: relative;
 
+      $caret-dimension: $caret-size * 0.375;
+      $caret-stroke-width: 1.5px;
       &:after {
-        border: 1.5px solid $color-node-arrow;
+        border: $caret-stroke-width solid $color-node-arrow;
         position: absolute;
         border-left: 0;
         border-top: 0;
-        left: 9px;
+        left: $caret-dimension;
         top: 50%;
-        height: 9px;
-        width: 9px;
-        transform: rotate(-45deg) translateY(-50%) translateX(0);
+        height: $caret-dimension;
+        width: $caret-dimension;
+        transform:
+          rotate(-45deg)
+          translateY(-50%)
+          translateX($caret-dimension * 0.2);
         transition: transform .25s;
         transform-origin: center;
       }
-
       &.expanded:after {
-        transform: rotate(45deg) translateY(-50%) translateX(-5px);
+        transform:
+          rotate(45deg)
+          translateY(-50%)
+          translateX($caret-dimension * -0.5);
       }
     }
   }

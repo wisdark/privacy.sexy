@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { ICategory } from '@/domain/ICategory';
+import type { Category } from '@/domain/Executables/Category/Category';
 import { OperatingSystem } from '@/domain/OperatingSystem';
-import { IScriptingDefinition } from '@/domain/IScriptingDefinition';
+import type { IScriptingDefinition } from '@/domain/IScriptingDefinition';
 import { ScriptingLanguage } from '@/domain/ScriptingLanguage';
-import { RecommendationLevel } from '@/domain/RecommendationLevel';
+import { RecommendationLevel } from '@/domain/Executables/Script/RecommendationLevel';
 import { getEnumValues } from '@/application/Common/Enum';
 import { CategoryCollection } from '@/domain/CategoryCollection';
 import { ScriptStub } from '@tests/unit/shared/Stubs/ScriptStub';
@@ -296,7 +296,7 @@ function getValidScriptingDefinition(): IScriptingDefinition {
 class CategoryCollectionBuilder {
   private os = OperatingSystem.Windows;
 
-  private actions: readonly ICategory[] = [
+  private actions: readonly Category[] = [
     new CategoryStub(1).withMandatoryScripts(),
   ];
 
@@ -307,7 +307,7 @@ class CategoryCollectionBuilder {
     return this;
   }
 
-  public withActions(actions: readonly ICategory[]): this {
+  public withActions(actions: readonly Category[]): this {
     this.actions = actions;
     return this;
   }
@@ -318,6 +318,10 @@ class CategoryCollectionBuilder {
   }
 
   public construct(): CategoryCollection {
-    return new CategoryCollection(this.os, this.actions, this.scriptingDefinition);
+    return new CategoryCollection({
+      os: this.os,
+      actions: this.actions,
+      scripting: this.scriptingDefinition,
+    });
   }
 }

@@ -31,10 +31,13 @@
 
 <script lang="ts">
 import {
-  useFloating, arrow, shift, flip, Placement, offset, Side, Coords, autoUpdate,
+  useFloating, arrow, shift, flip, type Placement, offset, type Side, type Coords, autoUpdate,
 } from '@floating-ui/vue';
 import { defineComponent, shallowRef, computed } from 'vue';
-import { useResizeObserverPolyfill } from '@/presentation/components/Shared/Hooks/UseResizeObserverPolyfill';
+import { useResizeObserverPolyfill } from '@/presentation/components/Shared/Hooks/Resize/UseResizeObserverPolyfill';
+import { throttle } from '@/application/Common/Timing/Throttle';
+import { type TargetEventListener } from '@/presentation/components/Shared/Hooks/UseAutoUnsubscribedEventListener';
+import { injectKey } from '@/presentation/injectionSymbols';
 import type { CSSProperties } from 'vue';
 
 const GAP_BETWEEN_TOOLTIP_AND_TRIGGER_IN_PX = 2;
@@ -48,9 +51,12 @@ export default defineComponent({
     const triggeringElement = shallowRef<HTMLElement | undefined>();
     const arrowElement = shallowRef<HTMLElement | undefined>();
 
+    const eventListener = injectKey((keys) => keys.useAutoUnsubscribedEventListener);
     useResizeObserverPolyfill();
 
-    const { floatingStyles, middlewareData, placement } = useFloating(
+    const {
+      floatingStyles, middlewareData, placement, update,
+    } = useFloating(
       triggeringElement,
       tooltipDisplayElement,
       {
@@ -67,6 +73,17 @@ export default defineComponent({
         whileElementsMounted: autoUpdate,
       },
     );
+
+    /*
+      Not using `float-ui`'s `autoUpdate` with `animationFrame: true` because it updates tooltips on
+      every frame through `requestAnimationFrame`. This behavior is analogous to a continuous loop
+      (often 60 updates per second and more depending on the refresh rate), which can be excessively
+      performance-intensive. It's overkill for the application needs and a monkey solution due to
+      its brute-force nature.
+    */
+    setupTransitionEndEvents(throttle(() => {
+      update();
+    }, 400, { excludeLeadingCall: true }), eventListener);
 
     const arrowStyles = computed<CSSProperties>(() => {
       if (!middlewareData.value.arrow) {
@@ -125,6 +142,19 @@ function getCounterpartBoxOffsetProperty(placement: Placement): keyof CSSPropert
   };
   const currentSide = placement.split('-')[0] as Side;
   return sideCounterparts[currentSide];
+}
+
+function setupTransitionEndEvents(
+  handler: () => void,
+  listener: TargetEventListener,
+) {
+  const transitionEndEvents: readonly (keyof HTMLElementEventMap)[] = [
+    'transitionend',
+    'transitioncancel',
+  ];
+  transitionEndEvents.forEach((eventName) => {
+    listener.startListening(document.body, eventName, handler);
+  });
 }
 </script>
 
@@ -194,6 +224,13 @@ $color-tooltip-background: $color-primary-darkest;
   @include fixed-fullscreen;
 
   /*
+    The z-index is set for both visible and invisible states to ensure it maintains its stacking order
+    above other elements during transitions. This approach prevents the tooltip from falling behind other
+    elements during the fade-in and fade-out animations.
+  */
+  z-index: 10;
+
+  /*
     Reset white-space to the default value to prevent inheriting styles from the trigger element.
     This prevents unintentional layout issues or overflow.
   */
@@ -204,7 +241,6 @@ $color-tooltip-background: $color-primary-darkest;
   @include hover-or-touch {
     + .tooltip__overlay {
       @include set-visibility(true);
-      z-index: 10000;
     }
   }
 }
@@ -213,8 +249,10 @@ $color-tooltip-background: $color-primary-darkest;
   background: $color-tooltip-background;
   color: $color-on-primary;
   border-radius: 16px;
-  padding: 12px 10px;
-  font-size: $font-size-absolute-normal;
+  padding: $spacing-absolute-large $spacing-absolute-medium;
+
+  // Explicitly set font styling for tooltips to prevent inconsistent appearances due to style inheritance from trigger elements.
+  @include base-font-style;
 
   /*
     This margin creates a visual buffer between the tooltip and the edges of the document.
@@ -222,8 +260,8 @@ $color-tooltip-background: $color-primary-darkest;
     and balanced layout.
     Avoiding setting vertical margin as it disrupts the arrow rendering.
   */
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: $spacing-absolute-xx-small;
+  margin-right: $spacing-absolute-xx-small;
 
   // Setting max-width increases readability and consistency reducing overlap and clutter.
   @include set-property-ch-value-with-fallback(

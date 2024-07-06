@@ -27,6 +27,7 @@ Key attributes of a good script:
   - `Minimize` over `Limit`, `Reduce`
   - `Maximize` over `Extend`, `Delay`, `Postpone`, `Prolong`
   - `Remove` over `Uninstall`
+  - `Improve` over `Increase`
 - Structure your phrases for clarity, examples:
   - Prefer `Disable XX telemetry` over `Disable telemetry in XX`
   - Prefer `Clear XX data` over `Clear data from XX`, or `Clear data of XX`.
@@ -35,8 +36,8 @@ Key attributes of a good script:
 ## Documentation
 
 - Use credible and reputable sources for references.
-- Use archived links by using [archive.org](https://archive.org) or [archive.today](https://archive.today).
-  - Format archive.today links fully, for example: `https://archive.today/YYYYMMDDhhmmss/https://privacy.sexy`.
+- Use archived links by using [archive.org](https://archive.org) or [archive.ph](https://archive.ph).
+  - Format archive.today links fully, for example: `https://archive.ph/YYYYMMDDhhmmss/https://privacy.sexy`.
 - Explain the default behavior if the script is not executed.
 
 ## Shared functions
