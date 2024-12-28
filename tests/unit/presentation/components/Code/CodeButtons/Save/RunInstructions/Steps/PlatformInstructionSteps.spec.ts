@@ -1,14 +1,14 @@
 import { shallowMount } from '@vue/test-utils';
-import PlatformInstructionSteps from '@/presentation/components/Code/CodeButtons/Save/RunInstructions/Steps/PlatformInstructionSteps.vue';
+import PlatformInstructionSteps from '@/presentation/components/Code/CodeButtons/Save/BrowserRunInstructions/Steps/PlatformInstructionSteps.vue';
 import { useCollectionState } from '@/presentation/components/Shared/Hooks/UseCollectionState';
 import { InjectionKeys } from '@/presentation/injectionSymbols';
 import { UseCollectionStateStub } from '@tests/unit/shared/Stubs/UseCollectionStateStub';
 import { AllSupportedOperatingSystems, type SupportedOperatingSystem } from '@tests/shared/TestCases/SupportedOperatingSystems';
 import { OperatingSystem } from '@/domain/OperatingSystem';
 import { CategoryCollectionStateStub } from '@tests/unit/shared/Stubs/CategoryCollectionStateStub';
-import WindowsInstructions from '@/presentation/components/Code/CodeButtons/Save/RunInstructions/Steps/Platforms/WindowsInstructions.vue';
-import MacOsInstructions from '@/presentation/components/Code/CodeButtons/Save/RunInstructions/Steps/Platforms/MacOsInstructions.vue';
-import LinuxInstructions from '@/presentation/components/Code/CodeButtons/Save/RunInstructions/Steps/Platforms/LinuxInstructions.vue';
+import WindowsInstructions from '@/presentation/components/Code/CodeButtons/Save/BrowserRunInstructions/Steps/Platforms/WindowsInstructions.vue';
+import MacOsInstructions from '@/presentation/components/Code/CodeButtons/Save/BrowserRunInstructions/Steps/Platforms/MacOsInstructions.vue';
+import LinuxInstructions from '@/presentation/components/Code/CodeButtons/Save/BrowserRunInstructions/Steps/Platforms/LinuxInstructions.vue';
 import type { Component } from 'vue';
 
 describe('PlatformInstructionSteps', () => {
@@ -17,7 +17,8 @@ describe('PlatformInstructionSteps', () => {
     [OperatingSystem.macOS]: MacOsInstructions,
     [OperatingSystem.Linux]: LinuxInstructions,
   };
-  AllSupportedOperatingSystems.forEach((operatingSystem) => {
+  AllSupportedOperatingSystems.forEach((operatingSystemKey) => {
+    const operatingSystem = operatingSystemKey as SupportedOperatingSystem;
     it(`renders the correct component for ${OperatingSystem[operatingSystem]}`, () => {
       // arrange
       const expectedComponent = testScenarios[operatingSystem];
@@ -47,7 +48,9 @@ describe('PlatformInstructionSteps', () => {
 
       // assert
       const componentWrapper = wrapper.findComponent(wrappedComponent);
-      expect(componentWrapper.props('filename')).to.equal(expectedFilename);
+      const propertyValues = componentWrapper.props();
+      const propertyValue = 'filename' in propertyValues ? propertyValues.filename : undefined;
+      expect(propertyValue).to.equal(expectedFilename);
     });
   });
 });

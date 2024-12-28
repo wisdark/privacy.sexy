@@ -11,8 +11,9 @@ jobs:
           - npm run lint:eslint
           - npm run lint:yaml
           - npm run lint:md
-          - npm run lint:md:relative-urls
           - npm run lint:md:consistency
+          - npm run lint:md:relative-urls
+          - npm run lint:md:external-urls
         os: [ macos, ubuntu, windows ]
       fail-fast: false # Still interested to see results from other combinations
     steps:
@@ -62,10 +63,8 @@ jobs:
         name: Setup node
         uses: ./.github/actions/setup-node
       -
-        name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
+        name: Setup node
+        uses: ./.github/actions/setup-python
       -
         name: Install dependencies
         run: |
@@ -89,10 +88,8 @@ jobs:
         name: Setup node
         uses: ./.github/actions/setup-node
       -
-        name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
+        name: Setup node
+        uses: ./.github/actions/setup-python
       -
         name: Install dependencies
         run: python3 -m pip install -r ./scripts/validate-collections-yaml/requirements.txt

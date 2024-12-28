@@ -1,6 +1,6 @@
 import type { IApplication } from '@/domain/IApplication';
 import { OperatingSystem } from '@/domain/OperatingSystem';
-import type { ICategoryCollection } from '@/domain/ICategoryCollection';
+import type { ICategoryCollection } from '@/domain/Collection/ICategoryCollection';
 import { EventSource } from '@/infrastructure/Events/EventSource';
 import { assertInRange } from '@/application/Common/Enum';
 import { CategoryCollectionState } from './State/CategoryCollectionState';
@@ -14,10 +14,12 @@ export class ApplicationContext implements IApplicationContext {
 
   public collection: ICategoryCollection;
 
-  public currentOs: OperatingSystem;
+  public get currentOs(): OperatingSystem {
+    return this.collection.os;
+  }
 
   public get state(): ICategoryCollectionState {
-    return this.states[this.collection.os];
+    return this.getState(this.collection.os);
   }
 
   private readonly states: StateMachine;
@@ -26,30 +28,50 @@ export class ApplicationContext implements IApplicationContext {
     public readonly app: IApplication,
     initialContext: OperatingSystem,
   ) {
+    this.collection = this.getCollection(initialContext);
     this.states = initializeStates(app);
-    this.changeContext(initialContext);
   }
 
   public changeContext(os: OperatingSystem): void {
-    assertInRange(os, OperatingSystem);
     if (this.currentOs === os) {
       return;
     }
-    const collection = this.app.getCollection(os);
-    this.collection = collection;
     const event: IApplicationContextChangedEvent = {
-      newState: this.states[os],
-      oldState: this.states[this.currentOs],
+      newState: this.getState(os),
+      oldState: this.getState(this.currentOs),
     };
+    this.collection = this.getCollection(os);
     this.contextChanged.notify(event);
-    this.currentOs = os;
+  }
+
+  private getCollection(os: OperatingSystem): ICategoryCollection {
+    validateOperatingSystem(os, this.app);
+    return this.app.getCollection(os);
+  }
+
+  private getState(os: OperatingSystem): ICategoryCollectionState {
+    const state = this.states.get(os);
+    if (!state) {
+      throw new Error(`Operating system "${OperatingSystem[os]}" state is unknown.`);
+    }
+    return state;
+  }
+}
+
+function validateOperatingSystem(
+  os: OperatingSystem,
+  app: IApplication,
+): void {
+  assertInRange(os, OperatingSystem);
+  if (!app.getSupportedOsList().includes(os)) {
+    throw new Error(`Operating system "${OperatingSystem[os]}" is not supported.`);
   }
 }
 
 function initializeStates(app: IApplication): StateMachine {
   const machine = new Map<OperatingSystem, ICategoryCollectionState>();
   for (const collection of app.collections) {
-    machine[collection.os] = new CategoryCollectionState(collection);
+    machine.set(collection.os, new CategoryCollectionState(collection));
   }
   return machine;
 }
